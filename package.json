@@ -1,0 +1,48 @@
+{
+  "name": "scholar.json",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server": "cd server2 && npm run dev",
+    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"vite\" \"npm run server\""
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.15",
+    "axios": "^1.8.3",
+    "body-parser": "^2.2.0",
+    "concurrently": "^9.1.2",
+    "csurf": "^1.10.0",
+    "express-session": "^1.18.1",
+    "framer-motion": "^12.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-google-recaptcha": "^3.1.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.3.0",
+    "react-slick": "^0.30.3",
+    "react-toastify": "^11.0.5",
+    "react-type-animation": "^3.2.0",
+    "redux-toolkit": "^1.1.2",
+    "slick-carousel": "^1.8.1",
+    "tailwindcss": "^4.0.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "i": "^0.3.7",
+    "init": "^0.1.2",
+    "npm": "^11.2.0",
+    "npx": "^10.2.2",
+    "vite": "^6.2.0"
+  }
+}
