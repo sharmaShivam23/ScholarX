@@ -13,18 +13,18 @@ exports.createCategory = async(req,res) => {
     console.log(response);
     
     res.status(200).json({
-      success : True,
-      message : "Tag created successfully"
+      success : true,
+      message : "category created successfully",
+      response
     })
   }catch(err){
     console.log(err);
     res.status(500).json({
       success : false,
-      message : "Error to create tag"
+      message : "Error to create category"
     })
   }
 }
-
 
 exports.showAllCategory = async(req,res) => {
   try{
@@ -38,7 +38,7 @@ exports.showAllCategory = async(req,res) => {
     console.log(err);
     res.status(500).json({
       success : false,
-      message : "error to find tags"
+      message : "error to find category"
     })
   }
 }

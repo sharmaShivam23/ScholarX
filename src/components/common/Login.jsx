@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HighlightText from "../cores/Homepage/HighlightText";
 import { IoIosArrowDown } from "react-icons/io";
 import sign from "../../assets/images/sign.png"
+import { Link } from "react-router-dom";
+import { login } from "../../services/apis";
+import { apiConnect } from "../../services/apiconnect";
+import { useSelector } from "react-redux";
+import { setToken } from "../../slices/authSlice";
+import { useDispatch } from "react-redux";
+import { setProfileImage } from "../../slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../slices/ProfileSlice";
+import { setLoading } from "../../slices/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate()
   const [selectedRole, setSelectedRole] = useState("Student");
-
-  
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.auth.token);
+  const profileImage = useSelector((state) => state.auth.profileImage);
+  const user = useSelector((state) => state.profile.user);
   const [formData , setFormData] = useState({
     email : "",
     password : "",
@@ -18,14 +32,45 @@ const Login = () => {
     setFormData((prev) => ({...prev , [name] : value , selectedRole}))
   }
 
-  const handleForm = (e) => {
+  useEffect(() => {
+    console.log("Token updated in Redux:", token);
+  }, [token]);
+  
+
+  useEffect(() => {
+    console.log("Token updated in Redux:", profileImage);
+  }, [token]);
+  
+  useEffect(() => {
+    console.log("user updated in Redux:", user);
+  }, [user]);
+  
+
+  const handleForm = async(e) => {
     e.preventDefault()
     console.log(formData);
+    dispatch(setLoading(true))
+    const toastId =  toast.loading("Loading...")
+    try{
+      const result = await apiConnect('POST' , login.LOGIN_API , formData)
+      toast.success(result.data.message , {id : toastId})
+      console.log(result);
+      localStorage.setItem("token" , JSON.stringify(result.data.token))
+      dispatch(setToken(result.data.token))
+      dispatch(setProfileImage(result.data.user.image))
+      dispatch(setUser(result.data.user))
+      navigate("/dashboard/my-profile")
+      
+    } catch(Err){
+      console.log(Err);
+      toast.error(Err.response.data.message , {id : toastId})
+      
+    }
     
   }
 
   return (
-    <div className="signup bg-[#000814] px-6 gap-6 sm:px-32 flex h-auto sm:h-[100vh] text-white py-10 sm:flex-row flex-col w-[100vw]">
+    <div className="signup bg-[#000814] px-6 gap-6  sm:px-32 flex h-auto sm:h-[100vh] text-white py-10 sm:flex-row flex-col w-[100vw]">
       <div className="left w-full sm:w-1/2 mt-24  sm:px-16">
         <p className="head text-4xl text-white font-[550] sm:max-w">
           Welcome back
@@ -93,13 +138,17 @@ const Login = () => {
                 className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
+           
 
            
 
           </div>
+          <Link to="/forgotpassword">
+          <p className="text-[#47A5C5] text-end font-semibold text-md mt-1">Forgot password</p>
+          </Link>
 
           <div className="btn w-full mt-7  flex justify-center rounded-xl items-center bg-[#FFD60A]">
-              <button className="text-black h-[6vh]  font-[550]">Sign In</button>
+              <button className="text-black cursor-pointer h-[6vh]  font-[550]">Sign In</button>
             </div>
 
         </form>

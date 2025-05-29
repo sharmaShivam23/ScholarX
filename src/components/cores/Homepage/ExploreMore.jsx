@@ -18,7 +18,7 @@ const ExploreMore = () => {
   const [currentCard , setCurrentCard] = useState(Homepage_explorer[0].courses[0].heading)
 
   const setMycards = (value) => {
-    setCurrentTab(value)
+    setCurrentTab(value);
     const result = Homepage_explorer.filter((course) => course.tag == value)
     setCourses(result[0].courses)
     setCurrentCard(result[0].courses[0].heading)

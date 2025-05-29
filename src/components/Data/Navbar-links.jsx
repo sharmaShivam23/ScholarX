@@ -6,9 +6,7 @@ export const NavbarLinks = [
   },
   {
     title: "Catalog",
-    icon: <IoIosArrowDown />,
-
-    // path : "/"
+    icon: <IoIosArrowDown />
   },
   {
     title: "About us",

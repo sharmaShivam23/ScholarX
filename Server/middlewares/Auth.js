@@ -1,91 +1,188 @@
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
-const user =  require("../model/user")
+// const jwt = require("jsonwebtoken")
+// require("dotenv").config()
+// const user =  require("../model/user")
 
 
-exports.auth = async (req,res,next) => {
-  try{
+// exports.auth = async (req,res,next) => {
+//   try{
 
-    const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer ", "")
+//     const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer", "")
 
-    try{
-    const decode = bcrypt.verify(token , process.env.JWT_SECRET)
-    console.log(decode);
+//     try{
+//     const decode = bcrypt.verify(token , process.env.JWT_SECRET)
+//     console.log(decode);
     
-    req.user = decode
-    }catch(Err){
-       res.status(401).json({
-        success : false,
-        message : "invalid token"
-       })
+//     req.user = decode
+//     }catch(Err){
+//        res.status(401).json({
+//         success : false,
+//         message : "invalid token"
+//        })
+//     }
+//     next()
+    
+//   }catch(err){
+//     console.log(err);
+//     res.status(401).json({
+//       success : false,
+//       message : "error to verify token"
+//      })
+//   }
+
+// }
+
+
+
+// exports.isStudent= async(req,res) => {
+//    try{
+
+//     if(req.user.accountType !== "Student"){
+//     return  res.status(401).json({
+//       success : false,
+//       message : "This is protected route for students"
+//      })
+//     }
+
+//    }catch(err){
+//     console.log(err);
+//     res.status(500).json({
+//       success : false,
+//       message : "User role cannot be verified , try again"
+//      })
+//    }
+// }
+
+// exports.isInstructor = async(req,res) => {
+//    try{
+
+//     if(req.user.accountType !== "Instructor"){
+//     return  res.status(401).json({
+//       success : false,
+//       message : "This is protected route for instructors"
+//      })
+//     }
+
+//    }catch(err){
+//     console.log(err);
+//     res.status(500).json({
+//       success : false,
+//       message : "instuctor role cannot be verified , try again"
+//      })
+//    }
+// }
+
+// exports.isAdmin = async (req,res) => {
+//    try{
+
+//     if(req.user.accountType !== "Admin"){
+//     return  res.status(401).json({
+//       success : false,
+//       message : "This is protected route for Admin"
+//      })
+//     }
+
+//    }catch(err){
+//     console.log(err);
+//     res.status(500).json({
+//       success : false,
+//       message : "Admin role cannot be verified , try again"
+//      })
+//    }
+// }
+
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const user = require("../model/user");
+
+// ✅ AUTH MIDDLEWARE
+exports.auth = async (req, res, next) => {
+  try {
+    const token =
+      req.cookies.token ||
+      req.body.token ||
+      req.header("Authorization")?.replace("Bearer ", "").trim();
+
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Token is missing",
+      });
     }
-    next()
-    
-  }catch(err){
+
+    try {
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      console.log("Decoded token: ", decode);
+      req.user = decode;
+    } catch (err) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token",
+      });
+    }
+
+    next();
+  } catch (err) {
     console.log(err);
-    res.status(401).json({
-      success : false,
-      message : "error to verify token"
-     })
+    return res.status(401).json({
+      success: false,
+      message: "Error verifying token",
+    });
   }
+};
 
-}
-
-
-
-exports.isStudent= async(req,res) => {
-   try{
-
-    if(req.user.accountType !== "Student"){
-    return  res.status(401).json({
-      success : false,
-      message : "This is protected route for students"
-     })
+// ✅ ADMIN GUARD
+exports.isAdmin = async (req, res, next) => {
+  try {
+    if (req.user.accountType !== "Admin") {
+      return res.status(401).json({
+        success: false,
+        message: "This is a protected route for Admins only",
+      });
     }
-
-   }catch(err){
+    next();
+  } catch (err) {
     console.log(err);
     res.status(500).json({
-      success : false,
-      message : "User role cannot be verified , try again"
-     })
-   }
-}
+      success: false,
+      message: "Admin role cannot be verified, try again",
+    });
+  }
+};
 
-exports.isInstructor = async(req,res) => {
-   try{
-
-    if(req.user.accountType !== "Instructor"){
-    return  res.status(401).json({
-      success : false,
-      message : "This is protected route for instructors"
-     })
+// ✅ STUDENT GUARD
+exports.isStudent = async (req, res, next) => {
+  try {
+    if (req.user.accountType !== "Student") {
+      return res.status(401).json({
+        success: false,
+        message: "This is a protected route for Students only",
+      });
     }
-
-   }catch(err){
+    next();
+  } catch (err) {
     console.log(err);
     res.status(500).json({
-      success : false,
-      message : "instuctor role cannot be verified , try again"
-     })
-   }
-}
+      success: false,
+      message: "Student role cannot be verified, try again",
+    });
+  }
+};
 
-exports.isAdmin = async (req,res) => {
-   try{
-
-    if(req.user.accountType !== "Admin"){
-    return  res.status(401).json({
-      success : false,
-      message : "This is protected route for Admin"
-     })
+// ✅ INSTRUCTOR GUARD
+exports.isInstructor = async (req, res, next) => {
+  try {
+    if (req.user.accountType !== "Instructor") {
+      return res.status(401).json({
+        success: false,
+        message: "This is a protected route for Instructors only",
+      });
     }
-
-   }catch(err){
+    next();
+  } catch (err) {
     console.log(err);
     res.status(500).json({
-      success : false,
-      message : "Admin role cannot be verified , try again"
-     })
-   }
-}
+      success: false,
+      message: "Instructor role cannot be verified, try again",
+    });
+  }
+};

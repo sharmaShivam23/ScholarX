@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../Tools/sendEmail');
 const axios = require('axios')
+const fs = require('fs')
+const path  = require('path')
 
 exports.signUp = async (req, res) => {
   try {
@@ -67,9 +69,20 @@ exports.signUp = async (req, res) => {
     });
 
     
+    const templatePath = path.join(__dirname, '../Templates/signup.html');
+    if (!fs.existsSync(templatePath)) {
+      return res.status(500).send({
+        success: false,
+        message: "signup template not found.",
+      });
+    }
+    const signupTemplate = fs.readFileSync(templatePath, 'utf8');
+
+    
     const subject = "Welcome to Our Platform!";
     const text = `Hi ${firstName}, Congratulations! Your account has been created successfully.`;
-    const html = `<h1>Welcome, ${firstName}!</h1><p>Thank you for signing up. Start exploring our platform now!</p>`;
+    const html =  signupTemplate
+    
 
     const isEmailSent = await sendEmail(email, subject, text, html);
     if (!isEmailSent) {
