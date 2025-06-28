@@ -10,6 +10,11 @@ const tabs = [
   "Skills path",
   "Career path"
 ]
+const tabs2 = [
+  "Free",
+  "New to Coding",
+  "Most popular"
+]
 
 const ExploreMore = () => {
 
@@ -27,8 +32,17 @@ const ExploreMore = () => {
   return (
     <>
     <div className='flex justify-center items-center'>
-      <div className={`head mt-10 flex justify-center  sm:gap-7  lg:gap-10 gap-3 px-10  bg-[#161D29] p-3 max-w-max  rounded-4xl  items-center`}>
+      <div className={`head mt-10 max-[400px]:hidden flex justify-center  sm:gap-7  lg:gap-10 gap-3 px-10  bg-[#161D29] p-3 max-w-max  rounded-4xl  items-center`}>
         {tabs.map((element , index) => (
+           <div key={index} className={`all   text-white ${currentTab == element ? "bg-[#000814] px-7 py-2 rounded-3xl" : ""} cursor-pointer   text-xs sm:text-lg font-[500]`}
+           onClick={() => setMycards(element)}
+           >
+            {element}
+           </div>
+        ))}
+      </div>
+      <div className={`head max-[400px]:flex w-[95vw] hidden mt-10 justify-center    gap-6   bg-[#161D29] p-3 rounded-4xl  items-center`}>
+        {tabs2.map((element , index) => (
            <div key={index} className={`all   text-white ${currentTab == element ? "bg-[#000814] px-7 py-2 rounded-3xl" : ""} cursor-pointer   text-xs sm:text-lg font-[500]`}
            onClick={() => setMycards(element)}
            >

@@ -24,13 +24,13 @@ const CodeBlocks = ({
         <p className="content text-xl font-[500] text-[#999DAA] mt-7 pr-4">
           {bigtext}
         </p>
-        <div className="btn mt-12 flex gap-8   max-[400px]:block">
+        <div className="btn mt-12 flex gap-8 ">
           <YellowArrowBtn text={btntext} />
           <Shadowbtn text="Learn more" />
         </div>
       </div>
 
-      <div className="second bg-[#111E3261]  backdrop-blur-xl  font-[600] sm:w-1/2 w-10/12 m-8 sm:m-0 p-6">
+      <div className="second bg-[#111E3261] text-xs sm:text-lg backdrop-blur-xl  font-[600] sm:w-1/2 w-10/12 m-8 sm:m-0 p-6">
       
         <p className="flex gap-5 mt-[3.5px]">
           <p>1</p>

@@ -7,15 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRef } from "react";
 import { apiConnect } from "../../services/apiconnect";
-import { signUp } from "../../services/apis"
+import { signUp } from "../../services/apis";
 import { sendOTP } from "../../services/apis";
 import { useNavigate } from "react-router-dom";
 import { setLoading } from "../../slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 const Signup = () => {
-  const {loading} = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+  const { loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [accountType, setSelectedRole] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -25,9 +25,8 @@ const Signup = () => {
     confirmpassword: "",
     accountType: "",
   });
-  
 
- const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
     setFormData((prev) => ({
@@ -42,78 +41,90 @@ const Signup = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  useEffect(() => {
+  fetch("http://localhost:3000/auth/user", {
+    credentials: "include",
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("User:", data);
+      toast.success("Signup Successful")
+    });
+}, []);
+
+
   const handleForm = async (e) => {
     e.preventDefault();
-    if(!Valid()){
-      return
+    if (!Valid()) {
+      return;
     }
     console.log(formData);
-    dispatch(setLoading(true))
-    const toastId= toast.loading("Sending reset link...")
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Sending reset link...");
     try {
-      const result = await apiConnect('POST' , sendOTP.OTP_API , { email: formData.email })
+      const result = await apiConnect("POST", sendOTP.OTP_API, {
+        email: formData.email,
+      });
       if (result.data.success) {
-      localStorage.setItem("signupData", JSON.stringify(formData));
-      toast.success(result.data?.message , {id : toastId});
-      navigate("/otp")
-      console.log(result);
-      clearField()
+        localStorage.setItem("signupData", JSON.stringify(formData));
+        toast.success(result.data?.message, { id: toastId });
+        navigate("/otp");
+        console.log(result);
+        clearField();
       }
-      
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data?.message, { id: toastId });
-    }
-    finally{
-      dispatch(setLoading(false))
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
   const Valid = () => {
-    if(!accountType){
-      toast.error("choose your role")
-      return false
+    if (!accountType) {
+      toast.error("choose your role");
+      return false;
     }
-    if(!formData.firstName){
-      toast.error("Enter first name")
-      return false
+    if (!formData.firstName) {
+      toast.error("Enter first name");
+      return false;
     }
-    if(!formData.lastName){
-      toast.error("Enter last name")
-      return false
+    if (!formData.lastName) {
+      toast.error("Enter last name");
+      return false;
     }
-    if(!formData.email){
-      toast.error("Enter email")
-      return false
+    if (!formData.email) {
+      toast.error("Enter email");
+      return false;
     }
-    if(!formData.password){
-      toast.error("Enter password")
-      return false
+    if (!formData.password) {
+      toast.error("Enter password");
+      return false;
     }
-    if(!formData.confirmpassword){
-      toast.error("Enter confirm password")
-      return false
+    if (!formData.confirmpassword) {
+      toast.error("Enter confirm password");
+      return false;
     }
-    if(formData.password != formData.confirmpassword){
-      toast.error("password do not match")
-      return false
+    if (formData.password != formData.confirmpassword) {
+      toast.error("password do not match");
+      return false;
     }
-    return true
-  }
+    return true;
+  };
 
-  const   clearField = () => {
-    formData.firstName = ""
-    formData.lastName = ""
-    formData.email = ""
-    formData.password = ""
-    formData.confirmpassword = ""
-    formData.phoneNumber = ""
+  const clearField = () => {
+    formData.firstName = "";
+    formData.lastName = "";
+    formData.email = "";
+    formData.password = "";
+    formData.confirmpassword = "";
+    formData.phoneNumber = "";
     // reset.current.reset()
-    setSelectedRole("")
-  }
+    setSelectedRole("");
+  };
 
   return (
-    <div className="signup bg-[#000814] px-6 gap-6 mt- sm:px-32 flex text-white py-10 sm:flex-row flex-col w-[100vw]">
+    <div className="signup mt-16 bg-[#000814] px-6 gap-6 mt- sm:px-32 flex text-white py-10 sm:flex-row flex-col w-[100vw]">
       <div className="left w-full sm:w-1/2  sm:px-16">
         <p className="head text-4xl text-white font-[550] sm:max-w">
           Join the millions learning to code with StudyNotion for free
@@ -192,7 +203,6 @@ const Signup = () => {
             </div>
           </div>
 
-       
           <div className="1 flex justify-center   items-center gap-5 mt-5">
             <div className="flex justify-center flex-col w-1/2">
               <label htmlFor="pass" className="text-lg mb-1.5 font-[600]">
@@ -233,6 +243,14 @@ const Signup = () => {
         </form>
       </div>
 
+      <a href="http://localhost:3000/auth/google">
+        <button>Login with Google</button>
+      </a>
+      <a href="http://localhost:3000/auth/logout">
+  <button>Logout</button>
+</a>
+
+
       <div className="right w-full sm:w-1/2  flex justify-center items-center mt-10 h-full">
         <img src={sign} alt="" />
       </div>
@@ -267,7 +285,6 @@ export default Signup;
 //     accountType: "",
 //   });
 
-
 //   useEffect(() => {
 //     // Fetch CSRF token from backend
 //     const fetchCsrfToken = async () => {
@@ -276,15 +293,13 @@ export default Signup;
 //         setCsrfToken(response.data.csrfToken);
 //         console.log("cs",csrfToken);
 //         console.log(response.data.csrfToken);
-        
-        
+
 //       } catch (error) {
 //         console.error("Failed to fetch CSRF token", error);
 //       }
 //     };
 //     fetchCsrfToken();
 //   }, []);
-
 
 //   const handleRecaptchaChange = (token) => {
 //     setRecaptchaToken(token.trim());

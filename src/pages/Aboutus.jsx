@@ -38,9 +38,9 @@ const FirstPage = () => {
 
   return (
     <>
-      <div className="head relative flex justify-center items-center flex-col h-[65vh] gap-4 bg-[#2C333F]  text-center">
+      <div className="head relative  flex justify-center items-center flex-col h-[65vh] gap-4 bg-[#2C333F]  text-center">
         <div className="btn">
-          <div className="btn shadow-[0px_1px_2px_rgba(255,255,255,0.6)]  flex border- bg-[#161D29]  sm:p- sm:px-8 px-5 py-3 rounded-4xl text-[#999DAA]">
+          <div className="btn shadow-[0px_1px_2px_rgba(255,255,255,0.6)]   flex border- bg-[#161D29]  sm:p- sm:px-8 px-5 py-3 rounded-4xl text-[#999DAA]">
             <p className="txt text-[#999DAA] font-[500] text-xs sm:text-lg">
               About Us
             </p>
@@ -49,11 +49,11 @@ const FirstPage = () => {
             </div>
           </div>
         </div>
-        <div className="txt text-4xl font-bold mt-5">
+        <div className="txt sm:text-4xl text-2xl font-bold mt-2">
           Driving Innovation in Online Education for a <br />
           <HighlightText text="Brighter Future" />
         </div>
-        <div className="content text-[#838894] text-lg font-[550] sm:max-w-[50vw] mt-2">
+        <div className="content text-[#838894] sm:text-lg text-xs font-[550] sm:max-w-[50vw] mt-2">
           Studynotion is at the forefront of driving innovation in online
           education. We're passionate about creating a brighter future by
           offering cutting-edge courses, leveraging emerging technologies, and
@@ -71,8 +71,8 @@ const FirstPage = () => {
             />
           ))}
         </div>
-        <div className="flex justify-center items-center">
-          <div className="txt2 font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-center">
+        <div className="flex justify-start">
+          <div className="txt2 font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-start">
             We are passionate about revolutionizing the way we learn. Our
             innovative platform <HighlightText text="combines technology" />,
             <span className="text-[#FF512F]">expertise</span> , and community to
@@ -157,16 +157,17 @@ const ThirdPage = () => {
 
 const ForthPage = () => {
   return (
-    <div className="p  h-[30vh] bg-[#161D29] flex-wrap w-screen flex justify-evenly items-center">
+    <div className="p  h-[30vh] bg-[#161D29] flex-wrap flex-col sm:flex-row w-screen flex justify-evenly items-center">
       {AboutData.map((item, index) => (
-        <div  key={index} className="d flex justify-center gap-4 items-center flex-col ">
-          <p className="text-3xl font-bold">{item.number}</p>
+        <div  key={index} className="d flex justify-center gap-4 items-center flex-col">
+          <p className="text-3xl  font-bold">{item.number}</p>
           <p className="text-md  text-[#585D69] font-[500]">{item.txt}</p>
         </div>
       ))}
     </div>
   );
 };
+
 
 
 const FifthPage = () => {

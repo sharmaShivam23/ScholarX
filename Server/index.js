@@ -5,7 +5,9 @@ const cors = require("cors")
 const {cloudinaryConnect} = require("./config/cloudinary")
 const app = express()
 const fileUpload = require("express-fileupload")
-
+const passport = require("passport");
+const session = require("express-session");
+require("./config/passport");
 
 app.use(express.json())
 app.use(cookieParser())
@@ -19,9 +21,53 @@ app.use(fileUpload({
   tempFileDir : "/tmp/"
 }))
 
+
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: false, // true if using HTTPS
+    httpOnly: true,
+  }
+}));
+
 app.listen(process.env.PORT, () => {
-  console.log("port is running on 3000");
+  console.log("port is running on 3001");
 })
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Google Auth Routes
+app.get("/auth/google", passport.authenticate("google", {
+  scope: ["profile", "email"]
+}));
+
+app.get("/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    session: true,
+  }),
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/login`);
+  }
+);
+
+
+app.get("/auth/logout", (req, res) => {
+  req.logout(() => {
+    res.redirect(`${process.env.FRONTEND_URL}/`);
+  });
+});
+
+app.get("/auth/user", (req, res) => {
+  res.send(req.user);
+});
 
 
 
