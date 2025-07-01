@@ -1,26 +1,27 @@
 const subSection = require("../model/subSection");
 const section = require("../model/Section");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+
 exports.createSubSection = async (req, res) => {
   try {
     const { title, description, courseDuration, sectionId } = req.body;
-    const { video } = req.files;
+    const  video  = req.files.video;
 
     if (!title || !description || !sectionId) {
-      res.status(400).send({
+      return  res.status(400).send({
         success: false,
-        message: "Section title and description, section Id are required",
+        message: "Section title and description",
       });
     }
-    if (!courseDuration) {
-      res.status(400).send({
-        success: false,
-        message: "Course duration is required",
-      });
-    }
+    // if (!courseDuration) {
+    // return  res.status(400).send({
+    //     success: false,
+    //     message: "Course duration is required",
+    //   });
+    // }
 
     if (!video) {
-      res.status(400).send({
+     return  res.status(400).send({
         success: false,
         message: "video is required",
       });
@@ -32,7 +33,7 @@ exports.createSubSection = async (req, res) => {
     );
 
     if(!videoUpload){
-      res.status(400).send({
+     return res.status(400).json({
         success: false,
         message: "failed to upload video",
       });
@@ -49,17 +50,19 @@ exports.createSubSection = async (req, res) => {
       sectionId,
       {$push : {subSection : createSub._id}},
       {new : true}
-    )
+    ).populate("subSection");
 
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "subsection created successfully",
-      updatedSubSection
+      updatedSubSection,
+      createSub : createSub,
+
     });
   } catch (err) {
     console.log(err);
-    res.status(500).send({
-      success: FontFaceSetLoadEvent,
+    res.status(500).json({
+      success: false,
       message: "error to create subsection",
     });
   }
@@ -75,7 +78,7 @@ exports.updatedSubSection = async (req, res) => {
     if (!title || !description || !subsectionId) {
       return res.status(400).send({
         success: false,
-        message: "Section title, description, and subsection Id are required",
+        message: "Section title, description and subsection Id are required",
       });
     }
 

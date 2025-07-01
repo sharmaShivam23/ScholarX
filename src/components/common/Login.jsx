@@ -63,7 +63,7 @@ const Login = () => {
       
     } catch(Err){
       console.log(Err);
-      toast.error(Err.response.data.message , {id : toastId})
+      toast.error(Err?.response?.data?.message , {id : toastId})
       
     }
     

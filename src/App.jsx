@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import AddCourse from "./components/AddCourse/AddCourse";
 // import userData from "./store/store";
 import StudentRoute from "./components/cores/Homepage/Auth/StudentRoute";
+import MyCourses from "./pages/MyCourses";
 
 function App() {
   const [updatepasswordToken, setupdatepasswordToken] = useState("");
@@ -81,7 +82,7 @@ function App() {
          user?.accountType === "Instructor" && (
           <>
           <Route path="/dashboard/add-course" element={<AddCourse />} />
-          {/* <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses />} /> */}
+          <Route path="/dashboard/my-courses" element={<MyCourses />} />
           </>
         )
 

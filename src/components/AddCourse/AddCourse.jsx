@@ -25,19 +25,18 @@ import CourseForm1 from './CourseForm1';
 import Message from './Message';
 import CourseForm2 from './CourseForm2';
 import { useSelector } from 'react-redux';
+import CourseForm3 from './CourseForm3';
 
 const AddCourse = () => {
    const { stateCourse } = useSelector((state) => state.Course);
   return (
-    <div className="pt-24 min-h-screen max-w-[85vw] ml-auto flex justify-center items-start gap-10 p-4 bg-black text-white">
+    <div className="pt-24 min-h-screen flex-col-reverse sm:flex-row w-full md:max-w-[90vw] ml-auto flex justify-center items-start gap-10 p-4 bg-black text-white">
       {/* Left Side */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col justify-center items-center gap-8">
         <RenderStep />
-        {stateCourse === 1 ? <CourseForm1 /> : <CourseForm2 />}
-        {/* {stateCourse === 1 ? <CourseForm1 /> : stateCourse === 2 ? <CourseForm2 /> : null} */}
+        {stateCourse === 1 ? <CourseForm1 /> : stateCourse === 2 ? <CourseForm2 /> : stateCourse === 3 ? <CourseForm3/> : null}
       </div>
 
-      {/* Right Side */}
       <div>
         <Message />
       </div>

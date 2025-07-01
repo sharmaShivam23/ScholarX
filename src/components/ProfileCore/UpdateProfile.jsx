@@ -192,9 +192,9 @@ const UpdateProfile = () => {
     // <div className="p flr items-end">
     <>
       {/* <Sidebar/> */}
-      <div className="mt-16 p-10 pb-16 ml-auto bg-[#000814] h-auto">
-        <div className="p2 max-w-[85vw] ml-auto">
-          <div className="p3 relative  max-w-[65vw] m-auto ">
+      <div className="mt-16 p-10 pb-16 overflow-x-hidden ml-auto bg-[#000814] h-auto">
+        <div className="p2 w-full md:max-w-[85vw] ml-auto">
+          <div className="p3 relative max-w-[90vw]  sm:max-w-[65vw] m-auto ">
             <h1 className="p-3 text-4xl font-[600] text-white ">
               Edit Profile
             </h1>
@@ -202,7 +202,7 @@ const UpdateProfile = () => {
             {/* profile image upadate */}
             <div className="div1 mt-12 shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
               <div className="user flex justify-between items-center">
-                <div className="i flex justify-center items-center gap-5">
+                <div className="i flex flex-col sm:flex-row text-center sm:text-start justify-center items-center gap-5">
                   <img
                     src={profileImage}
                     alt={user?.firstName}
@@ -250,11 +250,11 @@ const UpdateProfile = () => {
 
             <div className="div1 mt-10 relative shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
               <div className="user flex flex-col">
-                <h1 className="text-2xl font-[600] text-white">
+                <h1 className="text-2xl mt-10 sm:mt-0 font-[600] text-white">
                   Profile Information
                 </h1>
 
-                <div className="pro grid text-white grid-cols-2 gap-5 mt-4">
+                <div className="pro grid text-white grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
                   <div className="mt-5.5">
                     <div className="name  flex flex-col gap-2">
                       <label htmlFor="name" className="text-lg font-[600]">
@@ -397,7 +397,7 @@ const UpdateProfile = () => {
 
             <div className="div1 mt-32  shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
               <h1 className="text-white font-bold text-2xl">Password</h1>
-              <div className="grid text-white grid-cols-2 gap-5">
+              <div className="grid text-white grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="mt-5.5">
                   <div className="pass  flex flex-col gap-2">
                     <label htmlFor="pass" className="text-lg font-[600]">
@@ -451,9 +451,9 @@ const UpdateProfile = () => {
             </div>
 
             {/* delete account */}
-            <div className="div1 mt-32  border-2 border-[#691432] rounded-lg bg-[#340019] h-auto p-10">
-              <div className="flex">
-                <div className="icon w-[80px] m-10 mt-0 h-[80px] bg-[#691432] rounded-full flex justify-center items-center">
+            <div className="div1 mt-32   border-2 border-[#691432] rounded-lg bg-[#340019] h-auto p-10">
+              <div className="flex flex-col sm:flex-row">
+                <div className="icon w-[80px] m-10  mt-0 h-[80px] bg-[#691432] rounded-full flex justify-center items-center">
                   <RiDeleteBin5Fill className="text-5xl text-[#EF476F]" />
                 </div>
                 <div className="txt">

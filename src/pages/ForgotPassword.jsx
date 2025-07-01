@@ -27,14 +27,14 @@ const ForgotPassword = ({setupdatepasswordToken}) => {
       console.log(response);
      
       if(response.data.success === true){
-        toast.success(response.data.message, { id: toastId });
+        toast.success(response?.data?.message, { id: toastId });
         setupdatepasswordToken(response.data.token)
         setEmailSent(true)
       }
     }
     catch(err){
       console.log(err);
-      toast.err(err.response.data.message, { id: toastId });
+      toast.error(err?.response?.data?.message, { id: toastId });
     }
     finally{
       dispatch(setLoading(false))

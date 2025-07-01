@@ -11,29 +11,37 @@ const ProfilePage = () => {
   return (
     // <div className="p flr items-end">
     <div className=" w-full pt-16 ml-auto bg-[#000814]  h-screen">
-      <div className="p2 max-w-[85vw] ml-auto">
-        <div className="p3 max-w-[65vw]  m-auto ">
+      <div className="p2 w-full md:max-w-[85vw] md:ml-auto">
+        <div className="p3 sm:max-w-[65vw] max-w-[90vw]  m-auto ">
           <h1 className="p-3 text-4xl  font-[600] text-white ">My Profile</h1>
 
-          <div className="div1 mt-12 shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
-            <div className="user flex justify-between items-center">
-              <div className="i flex justify-center items-center gap-5">
+          <div className="div1  mt-12 shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
+            <div className="user flex   justify-center items-center">
+              <div className="i flex max-[500px]:flex-col text-center justify-center w-full items-center gap-5">
+               
+               {/* img */}
+                <div className="img w-full flex justify-center sm:justify-start items-center">
                 <img
                   src={profileImage}
                   alt={user?.firstName}
                   className="h-[100px] object-cover w-[100px] rounded-full bg-white"
                 />
-                <div className="details text-white flex flex-col">
+                </div>
+               
+               {/* detales */}
+                <div className="details w-full justify-start text-white flex flex-col">
                   <p className="text-lg font-bold">{user?.firstName}</p>
                   <p className="text-md">{user?.email}</p>
                 </div>
-              </div>
+
+               {/* Edit */}
               <div
                 onClick={() => navigate("/dashboard/settings")}
-                className="btn"
+                className="btn  flex sm:justify-end justify-center w-full"
               >
                 <YellowBtn text="Edit" />
               </div>
+               </div>
             </div>
           </div>
 
@@ -43,7 +51,7 @@ const ProfilePage = () => {
                 Personal Details
               </h1>
 
-              <div className="pro grid grid-cols-2 gap-5 mt-4">
+              <div className="pro grid sm:grid-cols-2 grid-cols-1 gap-5 mt-4">
                 <div className="1">
                   <p className="text-[#424854] text-md">First Name</p>
                   <p className="text-white text-md">{user?.firstName}</p>

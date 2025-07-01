@@ -10,13 +10,15 @@ import CourseForm2 from "./CourseForm2";
 import toast from "react-hot-toast";
 import { setState } from "../../slices/CourseSlice";
 import { useDispatch } from "react-redux";
+import { setCourseId } from "../../slices/CourseSlice";
+import { setCourse } from "../../slices/CourseSlice";
 
 const CourseForm1 = () => {
   const [benefitInput, setBenefitInput] = useState("");
   const [benefitArray, setBenefitArray] = useState([]);
 
   const { token } = useSelector((state) => state.auth);
-  const { stateCourse } = useSelector((state) => state.Course);
+  const { stateCourse , CourseId  , Course } = useSelector((state) => state.Course);
   const { user } = useSelector((state) => state.profile);
   const [categoryData, setCategoryData] = useState([]);
   const dispatch = useDispatch();
@@ -32,6 +34,12 @@ const CourseForm1 = () => {
     thumbnail: null,
     whatYouWillLearn: [],
   });
+
+    useEffect(() => {
+      console.log("c",Course);
+      
+    } , [Course]);
+
 
   const handleBenefitChange = (e) => {
     setBenefitInput(e.target.value);
@@ -101,6 +109,9 @@ const CourseForm1 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!Valid()) {
+      return
+    }
     console.log(formData);
      const toastId = toast.loading("Creating Course...");
 
@@ -126,18 +137,27 @@ const CourseForm1 = () => {
           },
         }
       );
-      toast.success(response.data.message, {id : toastId})
-      if(response.data.success == true){
+      console.log(response);
+      
+      toast.success(response?.data?.message, {id : toastId})
+      if(response?.data?.success == true){
         dispatch(setState(2))
-        console.log("state" , stateCourse);
+       dispatch(setCourseId(response?.data?.data?._id))
+       dispatch(setCourse(response?.data?.data))
+       console.log("Course ID set in Redux:", response?.data?.data._id);
         ClearFields()
-
       }
       console.log(response);
     } catch (Err) {
-      console.log("bhbh",Err);
-      toast.error(Err.response.data.message, {id : toastId})
-    }
+  console.error("API Error:", Err);
+  const errorMessage =
+    Err?.response?.data?.message ||
+    Err?.message ||
+    "Something went wrong. Please try again.";
+
+  toast.error(errorMessage, { id: toastId });
+}
+
   };
 
 
@@ -158,11 +178,40 @@ const CourseForm1 = () => {
     
   }
 
+ function Valid() {
+  if (!formData.courseName) {
+    toast.error("Course name is required");
+    return false;
+  }
+  if (!formData.courseDescription) {
+    toast.error("Course description is required");
+    return false;
+  }
+  if (!formData.price) {
+    toast.error("Course price is required");
+    return false;
+  }
+  if (!formData.category) {
+    toast.error("Course category is required");
+    return false;
+  }
+  if (!formData.tag) {
+    toast.error("Course tag is required");
+    return false;
+  }
+  if (!formData.thumbnail) {
+    toast.error("Course thumbnail is required");
+    return false;
+  }
+
+  return true;
+}
+
   
   return (
-    <div className="w-[45vw]  flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
-      <form action="" onSubmit={handleSubmit}>
-        <div className="flex justify-center flex-col w-[40vw] gap-5">
+    <div className="md:w-[45vw] w-full flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
+      <form action="" className="w-full" onSubmit={handleSubmit}>
+        <div className="flex justify-center flex-col w-full md:w-[40vw] gap-5">
           {/* Title */}
           <div>
             <label htmlFor="courseName" className="text-md mb-1.5 font-[400]">

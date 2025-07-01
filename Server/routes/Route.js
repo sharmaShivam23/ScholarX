@@ -11,7 +11,7 @@ const { sendOTP, signUp, login, changePassword } = require('../controllers/auth'
 const { createCategory, showAllCategory } = require('../controllers/categorys');
 
 // Course Controllers
-const { createCourse, showAllCourses , CourseDetails} = require('../controllers/Course');
+const { createCourse, showAllCourses , CourseDetails , updateCourseStatus , getCoursesByInstructor , deleteCourse} = require('../controllers/Course');
 
 // Profile Controllers
 const { profile, getAllUserDetails, delteProfile , uploadProfileImage } = require('../controllers/Profile');
@@ -42,6 +42,10 @@ router.get('/categories', showAllCategory);
 router.post('/create-course', auth , isInstructor, createCourse);
 router.get('/courses', showAllCourses);
 router.post('/courseDetails',CourseDetails);
+router.put('/updateCourseStatus',updateCourseStatus);
+router.get('/getInstructorCourse/:id', getCoursesByInstructor);
+router.delete("/deleteCourse", deleteCourse);
+
 
 // Profile Routes*
 router.put('/profile', profile);

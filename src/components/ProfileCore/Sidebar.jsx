@@ -1,43 +1,4 @@
 
-
-// import React, { useState } from 'react';
-// import { Sidebardata } from '../Data/ProfileSidebarData';
-// import { Link, Navigate, useLocation } from 'react-router-dom';
-// import { setLogoutState } from '../../slices/ProfileSlice';
-// import { useDispatch } from 'react-redux';
-
-
-// const Sidebar = () => {
-//   const location = useLocation();
-//   const dispatch = useDispatch()
-
-//   return (
-//     <div className="w-[14vw] fixed top-0 left-0 h-screen bg-[#161D29] p- pt-16 flex flex-col gap-2 text-center">
-//       {Sidebardata.map((item, index) => (
-//         <Link to={item.path} key={index}>
-//           <div
-//             className={`flex font-[450] text-lg mt-4  text-[#838894] gap-3 items-center justify-start px-2 py-4 transition-all duration-200 ${
-//               location.pathname === item.path ? 'bg-[#3D2A01]  text-[#FFD60A]' : ''
-//             }`}
-//           >
-//             <div className="icon">{item.icon}</div>
-//             {/* <div className="para">{item.title}</div> */}
-//             {item.title == "Logout" ? (
-//               <div onClick={() => dispatch(setLogoutState(true))} className="para">{item.title}</div>
-//             ) :
-//             <div className="para">{item.title}</div>
-//             }
-//           </div>
-//         </Link>
-       
-//       ))}
-     
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
 import React from 'react';
 import { Sidebardata } from '../Data/ProfileSidebarData';
 import { Link, useLocation } from 'react-router-dom';
@@ -50,7 +11,7 @@ const Sidebar = () => {
   const {user} = useSelector((state) => state.profile)
 
   return (
-    <div className="w-[14vw] fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 flex flex-col gap-2 text-center">
+    <div className="w-[14vw] hidden  fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:flex flex-col gap-2 text-center">
       {Sidebardata.map((item, index) => {
          if (item.type && user?.accountType !== item.type) return null
         const isActive = location.pathname === item.path;

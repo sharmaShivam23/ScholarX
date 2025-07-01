@@ -9,6 +9,7 @@ import { apiConnect } from "../../services/apiconnect";
 import { categories } from "../../services/apis";
 import { sendOTP } from "../../services/apis";
 import toast from "react-hot-toast";
+import { CiMenuKebab } from "react-icons/ci";
 // import { useSelector } from "react-redux";
 
 const Navbar = () => {
@@ -75,7 +76,7 @@ const Navbar = () => {
                               key={index}
                               className="text-black font-semibold text-xl px-5 mt-4 p-2 hover:bg-yellow-500 cursor-pointer"
                             >
-                              {item.name}
+                              {item.name} 
                             </p>
                           ))
                         )}

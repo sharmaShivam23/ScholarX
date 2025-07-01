@@ -63,3 +63,23 @@ export const SectionName = {
 export const SubSectionName = {
   CREATE_SUB_SECTION_API: `${BASE_URL}/create-subsection`
 }
+
+export const DeleteSection = {
+  DELETE_SECTION_API: `${BASE_URL}/delete-section`
+}
+
+export const DeleteSubSection = {
+  DELETE_Sub_SECTION_API: `${BASE_URL}/delete-subsection`
+}
+
+export const updateCourseStatus = {
+  COURSE_STATUS_API: `${BASE_URL}/updateCourseStatus`
+}
+
+export const deleteCourse = {
+  DELETE_COURSE_API: `${BASE_URL}/deleteCourse`
+}
+
+export const getInstructorCourses = (userId) => ({
+  INSTRUCTOR_COURSES_API: `${BASE_URL}/getInstructorCourse/${userId}`
+})
