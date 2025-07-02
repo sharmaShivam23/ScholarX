@@ -99,3 +99,5 @@ function App() {
 export default App;
 
 // "server": "cd server && npm run dev",
+ // "server": "cd server && npm run dev",
+    // "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"vite\" \"npm run server\""
