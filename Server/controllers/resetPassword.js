@@ -1,6 +1,6 @@
 require("dotenv").config();
 const user = require("../model/user");
-const bcrypt = require("bcrypt"); 
+const bcrypt = require("bcryptjs"); 
 const mailSender = require("../utils/mailSender");
 const crypto = require("crypto")
 const mongoose = require('mongoose')

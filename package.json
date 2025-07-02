@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/vite": "^4.0.15",
     "axios": "^1.8.3",
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "concurrently": "^9.1.2",
     "csurf": "^1.10.0",
