@@ -22,18 +22,18 @@ app.use(fileUpload({
   tempFileDir : "/tmp/"
 }))
 
-
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
-    secure: false, // true if using HTTPS
+    secure: true,           // ✅ Required for HTTPS (Render)
+    sameSite: "none",       // ✅ Required for cross-origin cookies
     httpOnly: true,
   }
 }));
+
 
 app.listen(process.env.PORT, () => {
   console.log("port is running on 3001");
