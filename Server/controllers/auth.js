@@ -29,8 +29,8 @@ exports.sendOTP = async(req,res) => {
   })
  console.log(otp);
 
- const result = await OTP.findOne({otp : otp})
- //if the genearted otp is already present in db genearte other unique otp
+ let result = await OTP.findOne({otp : otp})
+ //ifthe genearted otp is already present in db genearte other unique otp
  while(result){
   otp = otpGenerator.generate(6 , {
     upperCaseAlphabets : false,

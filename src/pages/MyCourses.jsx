@@ -122,7 +122,7 @@ const MyCourses = () => {
 
             <div className="right">
               <ul className="flex gap-10 text-xl font-semibold ">
-                <li>{courseDetail?.duration || "2h 30min"}</li>
+                <li>{courseDetail?.duration ||`${Math.floor(Math.random()*10)}h  ${Math.floor(Math.random()*61)}min`}</li>
                 <li>{courseDetail?.price || "1000"}</li>
                 <div className="i flex justify-center items-center gap-4 text-2xl">
                 <li onClick={() => handleDelete(courseDetail._id)} className="cursor-pointer hover:text-red-500 transition-all ease-in-out duration-700 hover:scale-110"><RiDeleteBin2Fill/></li>

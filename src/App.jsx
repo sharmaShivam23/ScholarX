@@ -22,12 +22,18 @@ import AddCourse from "./components/AddCourse/AddCourse";
 // import userData from "./store/store";
 import StudentRoute from "./components/cores/Homepage/Auth/StudentRoute";
 import MyCourses from "./pages/MyCourses";
+import Catalog from "./pages/Catalog";
+import EachCourse from "./components/catalogcore/EachCourse";
+import SubVideo from "./components/catalogcore/SubVideo";
+import Footer from "./components/common/Footer";
+
 
 function App() {
   const [updatepasswordToken, setupdatepasswordToken] = useState("");
   console.log("uptoken", updatepasswordToken);
    const {logoutState} = useSelector((state) => state.profile)
     const { user } = useSelector((state) => state.profile);
+    const {courseId} = useSelector((state) => state.Category)
 
   return (
     
@@ -41,6 +47,10 @@ function App() {
         <Route path="/about" element={<Aboutus />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/otp" element={<OTPpage />} />
+        <Route path="/Catalog/:catalogName" element={<Catalog />} />
+        <Route path={`/catalog/courses/:courseId`} element={<EachCourse />} />
+        <Route path={`/courses/:courseId/lecture`} element={<SubVideo />} />
+
         <Route
           path="/forgotpassword"
           element={
@@ -91,6 +101,7 @@ function App() {
 
         </Route>
       </Routes>
+      <Footer/>
       </>
   
   );

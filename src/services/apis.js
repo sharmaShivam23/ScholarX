@@ -80,6 +80,15 @@ export const deleteCourse = {
   DELETE_COURSE_API: `${BASE_URL}/deleteCourse`
 }
 
+export const CategoryCourse = {
+  CATEGORY_COURSE_API: `${BASE_URL}/category/course`
+}
+
 export const getInstructorCourses = (userId) => ({
   INSTRUCTOR_COURSES_API: `${BASE_URL}/getInstructorCourse/${userId}`
+})
+
+
+export const getEachCourse = (courseId) => ({
+  GET_COURSE_API: `${BASE_URL}/Course/${courseId}`
 })

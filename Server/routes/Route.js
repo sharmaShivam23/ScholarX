@@ -8,7 +8,7 @@ const {auth , isAdmin , isInstructor , isStudent} = require('../middlewares/Auth
 const { sendOTP, signUp, login, changePassword } = require('../controllers/auth');
 
 // Category Controllers
-const { createCategory, showAllCategory } = require('../controllers/categorys');
+const { createCategory, showAllCategory , getCourseDeatils } = require('../controllers/categorys');
 
 // Course Controllers
 const { createCourse, showAllCourses , CourseDetails , updateCourseStatus , getCoursesByInstructor , deleteCourse} = require('../controllers/Course');
@@ -36,12 +36,14 @@ router.post('/change-password', changePassword);
 // router.post('/create-category', createCategory);
 router.post('/create-category',auth, isAdmin, createCategory);
 router.get('/categories', showAllCategory);
+router.post('/category/course', getCourseDeatils);
 
 // Course Routes*
 // router.post('/create-course', createCourse);
+// router.post('/create-course', createCourse);
 router.post('/create-course', auth , isInstructor, createCourse);
 router.get('/courses', showAllCourses);
-router.post('/courseDetails',CourseDetails);
+router.get('/course/:courseId',CourseDetails);
 router.put('/updateCourseStatus',updateCourseStatus);
 router.get('/getInstructorCourse/:id', getCoursesByInstructor);
 router.delete("/deleteCourse", deleteCourse);

@@ -3,7 +3,6 @@ const user = require("../model/user");
 const Category = require("../model/Category");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
-
 exports.createCourse = async (req, res) => {
   try {
     const {
@@ -11,13 +10,11 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       whatYouWillLearn,
       price,
-      category, 
-      tag, 
+      category,
+      tag,
     } = req.body;
 
-
-    const thumbnail  = req.files.thumbnail  
-
+    const thumbnail = req.files.thumbnail;
 
     if (
       !courseName ||
@@ -32,14 +29,14 @@ exports.createCourse = async (req, res) => {
       });
     }
 
-    if(!thumbnail){
+    if (!thumbnail) {
       return res.status(401).json({
         success: false,
-        message: "Thubmnail is required"
+        message: "Thubmnail is required",
       });
     }
 
-
+    // const userId = req.body;
     const userId = req?.user?.id;
 
     if (!userId) {
@@ -70,14 +67,17 @@ exports.createCourse = async (req, res) => {
       process.env.FOLDER_NAME
     );
 
+    // Add course to the category
+    
+
     const newCourse = await course.create({
       courseName,
       courseDescription,
       whatYouWillLearn,
-      price, 
+      price,
       Instructor: InstructorDetails._id,
       thumbnail: uploadedThumbnail.secure_url,
-      category: [categoryDetails._id], 
+      category: [categoryDetails._id],
       tag: tag ? [tag] : [],
     });
 
@@ -88,6 +88,14 @@ exports.createCourse = async (req, res) => {
         $push: {
           courses: newCourse._id,
         },
+      },
+      { new: true }
+    );
+
+    await Category.findByIdAndUpdate(
+      categoryDetails._id,
+      {
+        $push: { course : newCourse._id },
       },
       { new: true }
     );
@@ -112,14 +120,14 @@ exports.showAllCourses = async (req, res) => {
     const response = await course.find(
       {},
       {
-        courseName : true,
-        whatYouWillLearn : true,
-        Instructor : true,
-        ratingAndReviews : true,
-        studentsEnrolled : true,
-        price : true
+        courseName: true,
+        whatYouWillLearn: true,
+        Instructor: true,
+        ratingAndReviews: true,
+        studentsEnrolled: true,
+        price: true,
       }
-    )
+    );
     res.status(200).json({
       success: true,
       message: "Getting all courses successfully",
@@ -134,11 +142,10 @@ exports.showAllCourses = async (req, res) => {
   }
 };
 
-
-
 exports.CourseDetails = async (req, res) => {
   try {
-    const { courseId } = req.body;
+    // const { courseId } = req.body
+    const { courseId } = req.params;
 
     if (!courseId) {
       return res.status(400).json({
@@ -147,8 +154,9 @@ exports.CourseDetails = async (req, res) => {
       });
     }
 
-    const courseDetails = await course.findById(courseId)
-     .populate({
+    const courseDetails = await course
+      .findById(courseId)
+      .populate({
         path: "Instructor",
         populate: {
           path: "additionalDetails",
@@ -161,8 +169,7 @@ exports.CourseDetails = async (req, res) => {
           path: "subSection",
         },
       }) // if you have this field // .populate("ratingAndReviews")
-      .exec()
-     
+      .exec();
 
     if (!courseDetails) {
       return res.status(404).json({
@@ -185,8 +192,6 @@ exports.CourseDetails = async (req, res) => {
     });
   }
 };
-
-
 
 // controllers/courseController.js
 
@@ -225,8 +230,6 @@ exports.updateCourseStatus = async (req, res) => {
   }
 };
 
-
-
 // Route: GET /courses/instructor/:instructorId
 
 // const Course = require("../models/Course"); // adjust path as needed
@@ -249,11 +252,9 @@ exports.getCoursesByInstructor = async (req, res) => {
   }
 };
 
-
-
 exports.deleteCourse = async (req, res) => {
   try {
-    const { courseId , userId } = req.body;
+    const { courseId, userId } = req.body;
     // const userId = req?.user?.id;
 
     if (!courseId) {
@@ -305,7 +306,6 @@ exports.deleteCourse = async (req, res) => {
       success: true,
       message: "Course deleted successfully",
     });
-
   } catch (err) {
     console.error("Error deleting course:", err);
     return res.status(500).json({
