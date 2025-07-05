@@ -24,7 +24,7 @@ import React from 'react';
 
 const Message = () => {
   return (
-    <div className="md:w-[25vw] w-full mx-auto p-6 bg-[#161D29] border-2 border-[#2C333F] rounded-xl md:mt-10 shadow-lg">
+    <div className="md:w-[25vw] w-full  max-w-[95%]   mx-auto p-6 bg-[#161D29] border-2 border-[#2C333F] rounded-xl md:mt-10 shadow-lg">
       <h1 className="text-white text-sm md:text-lg font-semibold mb-4 flex items-center gap-2">
         ⚡ Course Upload Tips
       </h1>

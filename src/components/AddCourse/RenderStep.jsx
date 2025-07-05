@@ -12,7 +12,7 @@ const RenderStep = () => {
   ]
 
   return (
-    <div className='flex justify-center items-center md:mt-20 mr-10 md:mr-6 w-[98vw] md:w-[50vw]'>
+    <div className='flex justify-center items-center md:mt-20 mr-10 md:mr-6 w-full md:w-[50vw]'>
       {data.map((item, index) => (
         <React.Fragment key={item.id}>
           <div className='flex justify-center items-center flex-col'>

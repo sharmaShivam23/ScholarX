@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
   logoutState: false,
+  hideMenu : false
 };
 
 const profileSlice = createSlice({
@@ -16,11 +17,14 @@ const profileSlice = createSlice({
     },
     setLogoutState(state, action) {
       state.logoutState = action.payload;
+    },
+    setMenu(state , action) {
+      state.hideMenu = action.payload;
     }
   }
 });
 
-export const { setUser, setLogoutState } = profileSlice.actions;
+export const { setUser, setLogoutState , setMenu } = profileSlice.actions;
 export default profileSlice.reducer;
 
 // import { createSlice } from "@reduxjs/toolkit";

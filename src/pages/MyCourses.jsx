@@ -91,7 +91,7 @@ const MyCourses = () => {
           {/* course */}
            {courses.length > 0 ? (
            courses.map((courseDetail , index) => (
-          <div key={index} className="course h-auto text-lg text-[#999DAA] sm:flex-row flex-col flex justify-between border-[1px] border-t-0 border-[#999DAA] p-5">
+          <div key={index} className="course h-auto  text-lg text-[#999DAA] sm:flex-row flex-col flex justify-between border-[1px] border-t-0 border-[#999DAA] p-5">
             <div className="left flex gap-8">
               {/* <div className="img w-[250px] rounded-sm h-[150px] bg-green-50">
                 <img
@@ -103,7 +103,7 @@ const MyCourses = () => {
              <div className="relative w-[250px] aspect-video rounded-sm overflow-hidden bg-green-50">
   <img
     src={courseDetail?.thumbnail}
-    className="absolute top-0 left-0 w-full h-full object-cover"
+    className="absolute top-0 left-0 w-[250px] h-full object-cover"
     alt=""
   />
 </div>

@@ -209,7 +209,7 @@ const CourseForm1 = () => {
 
   
   return (
-    <div className="md:w-[45vw] w-full flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
+    <div className="md:w-[45vw] max-w-[95%] mx-auto mb-10   w-full flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
       <form action="" className="w-full" onSubmit={handleSubmit}>
         <div className="flex justify-center flex-col w-full md:w-[40vw] gap-5">
           {/* Title */}
