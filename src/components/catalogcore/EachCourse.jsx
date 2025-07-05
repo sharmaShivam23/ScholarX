@@ -41,8 +41,8 @@ const EachCourse = () => {
   }
 
   return (
-    <div className="min-h-screen relative w-full  mt-16  text-[#999DAA]">
-      <div className="px-6 sm:px-12 md:px-20 py-10 flex flex-col gap-4 bg-[#161D29]">
+    <div className="min-h-screen  relative w-full  mt-16  text-[#999DAA]">
+      <div className="px-6 sm:px-12  md:px-20 py-10 flex flex-col gap-4 bg-[#161D29]">
         <div className="text-lg text-gray-400">
           Home / Learning / <span className="text-white">{CourseData?.courseName}</span>
         </div>
@@ -80,16 +80,50 @@ const EachCourse = () => {
             Language: English
           </div>
         </div>
+
+
       </div>
 
-      <div className="second border-2 mx-20 my-10 border-[#999DAA] h-auto p-10 w-[60vw]">
-        <h1 className="text-3xl font-bold text-white mb-4">
+      <div className="pay flex lg:hidden p-10">
+         <div className="sec p-8 flex flex-col gap-4">
+          <div className="p text-2xl font-bold text-white">Rs. {CourseData.price}</div>
+          <div className="btn w-[200px]">
+            <button className="bg-[#FFD60A] cursor-pointer text-black font-semibold w-full rounded-sm p-2">
+              Add to Cart
+            </button>
+          </div>
+          <div onClick={handleVideoShow} className="btn w-[200px]">
+              <button className="bg-[#161D29] cursor-pointer text-white font-semibold w-full rounded-sm p-2">
+              Buy Now
+            </button>
+          </div>
+
+          <p className="text-start">30-Day Money-Back Guarantee</p>
+
+          <div className="s t">
+            <h1 className="text-white text-lg">This course includes:</h1>
+            <ul className="text-[#06D6A0] flex flex-col mt-3 gap-1 font-semibold text-[14px]">
+              <li className="flex gap-2 items-center"> <FaClock/> 8 hours on-demand video</li>
+              <li className="flex gap-2 items-center"><FaArrowPointer/> Full Lifetime access</li>
+              <li className="flex gap-2 items-center"><IoTv/> Access on Mobile and TV</li>
+              <li className="flex gap-2 items-center"><PiCertificateFill/> Certificate of completion</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <div className="second border-2 lg:mx-20 my-10 max-w-[90%] mx-auto border-[#999DAA] h-auto p-10 w-full lg:w-[60vw]">
+        <h1 className="md:text-3xl text-xl font-bold text-white mb-4">
           What you will learn
         </h1>
 
         
 
-        <ul className="list-disc list-inside text-[#C5C7D4] text-md space-y-2">
+        <ul className="list-disc list-inside text-[#C5C7D4] text-xs md:text-md space-y-2">
   {(CourseData?.whatYouWillLearn?.length > 0
     ? CourseData?.whatYouWillLearn
     : [
@@ -111,22 +145,22 @@ const EachCourse = () => {
 
       </div>
 
-      <div className="second border-2 mx-20 my-10  border-[#999DAA] h-auto p-10 w-[60vw]">
-        <h1 className="text-3xl font-bold text-white mb-4">Course Content</h1>
-        <div className="p flex justify-between">
+      <div className="second border-2 max-w-[90%] mx-auto lg:mx-20 my-10  border-[#999DAA] h-auto p-10  lg:w-[60vw]">
+        <h1 className="lg:text-3xl text-xl font-bold text-white mb-4">Course Content</h1>
+        <div className="p text-xs lg:text-md flex justify-between">
           <ul className="flex gap-3">
            <li>{CourseData?.courseContent?.length} Section</li>
             <li>41 lectures</li>
             <li>2 h 30min </li>
           </ul>
 
-          <div className="text-xl text-[#FFD60A] mr-20 font-semibold">Collapse all Sections</div>
+          <div className="md:text-xl text-sm hidden lg:flex text-[#FFD60A] mr-20 font-semibold">Collapse all Sections</div>
         </div>
 
         {CourseData?.courseContent?.map((item, index) => (
           <div key={index}>
             {/* Section Header */}
-            <div className="content max-w-[50vw] flex justify-start items-center border-2 border-[#424854] bg-[#2C333F] text-2xl font-semibold mr-auto px-5 h-[8vh] mt-5">
+            <div className="content lg:max-w-[50vw] max-w-[100%] mx-auto lg:mx-0 flex justify-start items-center border-2 border-[#424854] bg-[#2C333F] text-sm lg:text-2xl font-semibold mr-auto px-5 h-[8vh] mt-5">
               <div className="section flex gap-2 w-full justify-start items-center">
                 <FaChevronUp
                   onClick={() => handleIconClick(index)}
@@ -134,20 +168,20 @@ const EachCourse = () => {
                     iconup[index] ? "rotate-180" : ""
                   }`}
                 />
-                <div className="text-xl flex justify-between items-center w-full font-semibold text-white">
+                <div className="lg:text-xl text-sm flex justify-between items-center w-full font-semibold text-white">
                 <p> {item?.sectionName}</p> 
-                <p className="text-lg font-semibold text-[#FFD60A]">{`${item?.subSection?.length} Lectures`}</p>
+                <p className="md:text-lg text-xs  font-semibold text-[#FFD60A]">{`${item?.subSection?.length} Lectures`}</p>
                 </div>
               </div>
             </div>
 
             {/* Subsections */}
             {iconup[index] && (
-              <div className="content max-w-[50vw] transition-all ease-in-out duration-500 flex justify-start items-center border-2 border-[#424854] text-2xl font-semibold mr-auto px-5 py-4">
-                <div className="text-lg text-white">
+              <div className="content lg:max-w-[50vw] max-w-[100%] mx-auto lg:mx-0 transition-all ease-in-out duration-500 flex justify-start items-center border-2 border-[#424854] text-2xl font-semibold mr-auto px-5 py-4">
+                <div className="lg:text-lg text-sm text-white">
                   <ul className="list-disc ml-5">
                     {item?.subSection.map((sub, i) => (
-                      <li className="flex gap-2"><IoMdVideocam className="text-[#FFD60A] mt-1 "/> {sub.title}</li>
+                      <li className="flex  gap-2"><IoMdVideocam className="text-[#FFD60A] mt-1 "/> {sub.title}</li>
                     ))}
                   </ul>
                 </div>
@@ -159,7 +193,7 @@ const EachCourse = () => {
 
 
 
-      <div className="p h-auto rounded-lg absolute top-14 flex flex-col justify-center items-center right-20 bg-[#2C333F] w-[25vw]">
+      <div className="p h-auto hidden  rounded-lg absolute top-14 lg:flex flex-col justify-center items-center right-20 bg-[#2C333F] w-[25vw]">
 
         <div className="img rounded-lg h-[220px] w-full">
           <img src={CourseData?.thumbnail} alt=""  className="w-full h-full object-cover bg-green-300"/>

@@ -83,6 +83,49 @@ const CarouselCourses = ({ id, courses }) => {
        
       ))}
     </div>
+//     <div className="p-4 sm:p-8 md:p-12 flex justify-center items-center w-full flex-wrap gap-8 lg:p-12">
+//   {courses.map((item, index) => (
+//     <div
+//       key={index}
+//       className="p-[3px] rounded-3xl bg-gradient-to-tr from-blue-700 to-cyan-400 shadow-lg hover:shadow-blue-500 transition-shadow duration-300"
+//     >
+//       {/* Inner card with main content */}
+//       <div
+//         onClick={() => handleClick(item._id)}
+//         className="w-full max-w-xs sm:max-w-sm cursor-pointer transform transition-all duration-300 hover:scale-[1.02] bg-gradient-to-tr from-[#1e293b] to-[#334155] shadow-xl hover:shadow-2xl rounded-2xl overflow-hidden border border-slate-600 group"
+//       >
+//         <img
+//           src={item.thumbnail}
+//           alt="Course thumbnail"
+//           className="w-full h-48 object-cover group-hover:opacity-90 transition-opacity duration-200"
+//         />
+
+//         <div className="p-4 flex flex-col space-y-3">
+//           <h3 className="font-semibold text-xl text-white line-clamp-2">
+//             {item.courseName ? item.courseName : "Python"}
+//           </h3>
+
+//           <p className="text-slate-300 text-sm line-clamp-3">
+//             {item.coursedescription
+//               ? item.coursedescription
+//               : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias molestiae excepturi quisquam explicabo laboriosam omnis."}
+//           </p>
+
+//           <div className="flex items-center gap-1 text-yellow-400 text-base">
+//             {[...Array(5)].map((_, i) => (
+//               <FaStar key={i} />
+//             ))}
+//           </div>
+
+//           <div className="text-lg font-bold text-blue-400">
+//             Rs. {item.price}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   ))}
+// </div>
+
   );
 };
 
