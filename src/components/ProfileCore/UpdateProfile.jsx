@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import YellowBtn from "../cores/Homepage/YellowBtn";
 import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
@@ -49,6 +49,8 @@ const UpdateProfile = () => {
   const [formData, setFormData] = useState({
     image: null,
   });
+
+ 
 
 
   const handleFileChange = (e) => {
@@ -384,12 +386,12 @@ const UpdateProfile = () => {
 
             <div className="btn flex absolute -right-10  justify-center items-center m-10 gap-4">
               <div className="btn">
-                <button className="w-[100px] text-white flex justify-center items-center rounded-md h-[45px] bg-[#161D29] font-bold text-lg">
+                <button className="w-[100px] cursor-pointer text-white flex justify-center items-center rounded-md h-[45px] bg-[#161D29] font-bold text-lg">
                   Cancel
                 </button>
               </div>
               <div onClick={handleUpdateUser} className="btn cursor-pointer">
-                <button className="w-[100px] flex justify-center items-center rounded-md h-[45px] bg-[#FFD60A] font-bold text-lg">
+                <button className="w-[100px] cursor-pointer flex justify-center items-center rounded-md h-[45px] bg-[#FFD60A] font-bold text-lg">
                   Save
                 </button>
               </div>
@@ -439,12 +441,12 @@ const UpdateProfile = () => {
 
             <div className="btn flex absolute -right-10  justify-center items-center m-10 gap-4">
               <div className="btn">
-                <button className="w-[100px] text-white flex justify-center items-center rounded-md h-[45px] bg-[#161D29] font-bold text-lg">
+                <button className="w-[100px] cursor-pointer text-white flex justify-center items-center rounded-md h-[45px] bg-[#161D29] font-bold text-lg">
                   Cancel
                 </button>
               </div>
               <div onClick={handleForm} className="btn">
-                <button className="w-[100px] flex justify-center items-center rounded-md h-[45px] bg-[#FFD60A] font-bold text-lg">
+                <button className="w-[100px] cursor-pointer flex justify-center items-center rounded-md h-[45px] bg-[#FFD60A] font-bold text-lg">
                   Update
                 </button>
               </div>

@@ -10,7 +10,7 @@ const ProfilePage = () => {
 
   return (
     // <div className="p flr items-end">
-    <div className=" w-full pt-16 ml-auto bg-[#000814]  h-screen">
+    <div className=" w-full pt-16 ml-auto bg-[#000814]  h-auto mb-20">
       <div className="p2 w-full md:max-w-[85vw] md:ml-auto">
         <div className="p3 sm:max-w-[65vw] max-w-[90vw]  m-auto ">
           <h1 className="p-3 text-4xl  font-[600] text-white ">My Profile</h1>
@@ -39,13 +39,13 @@ const ProfilePage = () => {
                 onClick={() => navigate("/dashboard/settings")}
                 className="btn  flex sm:justify-end justify-center w-full"
               >
-                <YellowBtn text="Edit" />
+                <YellowBtn w="[80px]" text="Edit" />
               </div>
                </div>
             </div>
           </div>
 
-          <div className="div1 mt-10 relative shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
+          <div className="div1 mt-10  relative shadow-[2px_0px_0px_rgba(255,255,255,0.3)]  rounded-lg bg-[#161D29] h-auto p-10">
             <div className="user flex flex-col">
               <h1 className="text-2xl font-[600] text-white">
                 Personal Details
@@ -93,9 +93,9 @@ const ProfilePage = () => {
 
               <div
                 onClick={() => navigate("/dashboard/settings")}
-                className="btn absolute top-4 right-7"
+                className="btn absolute bottom-4 right-10 sm:top-4 sm:right-7"
               >
-                <YellowBtn text="Edit" />
+                <YellowBtn  w="[80px]" text="Edit" />
               </div>
             </div>
           </div>

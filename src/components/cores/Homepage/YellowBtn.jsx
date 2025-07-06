@@ -1,8 +1,8 @@
 import React from "react";
 
-const YellowBtn = ({ text , px }) => {  
+const YellowBtn = ({ text , px , w }) => {  
   return (
-    <button className={`flex text-sm sm:text-lg justify-between items-center ${px} hover:scale-110 transition-all duration-1000 ease-in-out cursor-pointer text-md bg-[#FFD60A] rounded-[8px] shadow-[2px_1px_1px_rgb(255,255,255)] text-black p-3`}>
+    <button className={`flex text-lg sm:text-lg justify-center items-center ${px} hover:scale-110 transition-all duration-1000 ease-in-out w-${w} font-bold  cursor-pointer text-md bg-[#FFD60A] rounded-[8px] shadow-[2px_1px_1px_rgb(255,255,255)] text-black p-3`}>
       {text}
     </button>
   );

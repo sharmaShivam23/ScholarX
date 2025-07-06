@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
   logoutState: false,
-  hideMenu : false
+  hideMenu : true
 };
 
 const profileSlice = createSlice({

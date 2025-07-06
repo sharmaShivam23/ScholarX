@@ -79,6 +79,10 @@ const Sidebar = () => {
       dispatch(setMenu(!hideMenu));
      }
 
+     const handleClickMenu = () => {
+      dispatch(setMenu(true))
+     }
+
   // Reusable Sidebar Item
   const renderSidebarItem = (item, index) => {
     const isActive = location.pathname === item.path;
@@ -101,7 +105,7 @@ const Sidebar = () => {
 
     return (
       <Link to={item.path} key={index}>
-        <div className={itemClasses}>
+        <div onClick={handleClickMenu} className={itemClasses}>
           <div className="icon">{item.icon}</div>
           <div className="para">{item.title}</div>
         </div>
@@ -112,12 +116,12 @@ const Sidebar = () => {
   return (
     <>
 
-      <div onClick={handleMenu} className="icon flex md:hidden text-4xl font-bold  h-screen text-white fixed z-[100] top-16 left-5">
+      <div onClick={handleMenu} className="icon  flex md:hidden text-4xl font-bold  h-screen text-white fixed z-[100] top-16 left-5">
            {hideMenu ?  <CgMenuRound/> : <RxCrossCircled/>} 
           </div>
     
       
-      <div className="w-[14vw] z-50 hidden fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:flex flex-col gap-2 text-center">
+      <div className="w-[14vw]  z-50 hidden fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:flex flex-col gap-2 text-center">
         {Sidebardata.map((item, index) => {
           if (item.type && user?.accountType !== item.type) return null;
           return renderSidebarItem(item, index);
@@ -126,7 +130,7 @@ const Sidebar = () => {
 
       
       {!hideMenu && (
-        <div className="w-[70vw] z-50 fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:hidden flex flex-col gap-2 text-center">
+        <div className="w-[70vw] mt-10 z-50 fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:hidden flex flex-col gap- text-center">
           {Sidebardata.map((item, index) => {
             if (item.type && user?.accountType !== item.type) return null;
             return renderSidebarItem(item, index);

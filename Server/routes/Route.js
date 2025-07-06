@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const {auth , isAdmin , isInstructor , isStudent} = require('../middlewares/Auth')
 
 // Auth Controllers
@@ -26,10 +27,24 @@ const { createSubSection, updatedSubSection, deletesubSection } = require('../co
 const { resetPassword, resetPasswordToken , updatePassword } = require('../controllers/resetPassword');
 
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 3,
+  message: {
+    success: false,
+    message: "Too many registration attempts. Please try again after an hour."
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+exports.limiter = limiter;
+
+
+
 // Auth Routes*
-router.post('/send-otp', sendOTP);
-router.post('/signup', signUp);
-router.post('/login', login);
+router.post('/send-otp', limiter ,  sendOTP);
+router.post('/signup', limiter ,  signUp);
+router.post('/login', limiter ,  login);
 router.post('/change-password', changePassword);
 
 // Category Routes*
@@ -66,7 +81,7 @@ router.put('/update-subsection', updatedSubSection);
 router.delete('/delete-subsection', deletesubSection);
 
 // Password Reset Routes*
-router.post('/reset-password-token', resetPasswordToken);
+router.post('/reset-password-token', limiter ,  resetPasswordToken);
 router.post('/reset-password', resetPassword)
 router.put('/update-password', updatePassword)
 

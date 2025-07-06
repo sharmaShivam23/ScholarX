@@ -54,7 +54,8 @@ exports.resetPasswordToken = async (req, res) => {
     console.error("Error in resetPasswordToken:", err);
     res.status(500).json({
       success: false,
-      message: "Failed to send password reset email",
+      // message: "Failed to send password reset email",
+       message: err.message || "Failed to send password reset email", 
     });
   }
 };
