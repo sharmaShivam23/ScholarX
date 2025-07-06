@@ -10,8 +10,12 @@ import { apiConnect } from "../services/apiconnect";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
+
 const UpdatePassword = () => {
   const navigate = useNavigate()
+  const { updatepasswordToken: token } = useParams();
   const [formData, setFormData] = React.useState({
     password: "",
     confirmPassword: "",
@@ -19,7 +23,7 @@ const UpdatePassword = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
- const { token } = useSelector((state) => state.auth);
+//  const { token } = useSelector((state) => state.auth);
  console.log("t" , token);
  
 

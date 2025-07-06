@@ -38,8 +38,8 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true }
     );
 
-    // const url = `https://scholar-x.vercel.app/updatepassword/${token}`
-    const url = `http://localhost:5173/updatepassword/${token}`
+    const url = `https://scholar-x.vercel.app/updatepassword/${token}`
+    // const url = `http://localhost:5174/updatepassword/${token}`
      // ✅ Fixed URL (was https:localhost)
 
     // Send email
@@ -63,6 +63,19 @@ exports.resetPasswordToken = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { password, confirmPassword, token } = req.body;
+
+    if(!password){
+       return res.status(400).json({
+        success: false,
+        message: "Password is required",
+      });
+    }
+    if(!confirmPassword){
+       return res.status(400).json({
+        success: false,
+        message: "Confirm password is required",
+      });
+    }
 
     if (password !== confirmPassword) {
       return res.status(400).json({
