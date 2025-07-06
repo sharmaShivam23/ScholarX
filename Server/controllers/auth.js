@@ -22,7 +22,7 @@ exports.sendOTP = async(req,res) => {
     })
   }
 
-  let otp = otpGenerator.generate(6 , {
+  let otp = otpGenerator.generate(5 , {
     upperCaseAlphabets : false,
     lowerCaseAlphabets : false,
     specialChars : false,
@@ -32,7 +32,7 @@ exports.sendOTP = async(req,res) => {
  let result = await OTP.findOne({otp : otp})
  //ifthe genearted otp is already present in db genearte other unique otp
  while(result){
-  otp = otpGenerator.generate(6 , {
+  otp = otpGenerator.generate(5 , {
     upperCaseAlphabets : false,
     lowerCaseAlphabets : false,
     specialChars : false,

@@ -7,13 +7,21 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { resetpassword } from "../services/apis";
 import { apiConnect } from "../services/apiconnect";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 const UpdatePassword = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = React.useState({
     password: "",
     confirmPassword: "",
   });
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+ const { token } = useSelector((state) => state.auth);
+ console.log("t" , token);
+ 
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -23,15 +31,24 @@ const UpdatePassword = () => {
   async function handleForm(e) {
     e.preventDefault();
     console.log(formData);
+    const toastId = toast.loading("Resetting your password...");
 
-    try{
+
+     try {
     const response = await apiConnect('POST' , resetpassword.RESETPASS_API , {...formData , token})
-    console.log(response);
-    
-    } catch(Err){
-      console.log(Err);
-      
+
+    if (response.data.success) {
+      toast.success("Password reset successfully", { id: toastId });
+      navigate("/login")
+    } else {
+      toast.error(response.data.message || "Reset failed", { id: toastId });
     }
+  } catch (err) {
+    console.error("Reset Error:", err);
+    toast.error(err?.response?.data?.message || "Something went wrong", {
+      id: toastId,
+    });
+  } 
     
   }
 
@@ -41,13 +58,13 @@ const UpdatePassword = () => {
   let hasSpecial = (password) => /[!@#$%^&*]/.test(password);
   let isLongEnough = (password) => /^.{8,}$/.test(password);
   return (
-    <div className="flex justify-center text-white bg-[#000814] h-auto sm:h-screen items-center">
+    <div className="flex justify-center mt-12 text-white bg-[#000814] h-auto sm:h-screen items-center">
       <form
         className="flex justify-center p-10 items-center gap-5 flex-col"
         onSubmit={handleForm}
       >
         <p className="p text-3xl font-bold text-center">Choose new password</p>
-        <p className="p text-xl font-semibold text-center text-[#AFB2BF]">
+        <p className="p text-lg font-semibold text-center text-[#AFB2BF]">
           Almost done. Enter your new password and youre all set.
         </p>
 
@@ -65,7 +82,7 @@ const UpdatePassword = () => {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="Enter Password"
-              className="h-[7vh] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+              className="h-[60px] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
             />
           
             <span onClick={() => setShowPassword((prev) => !prev)} className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer">
@@ -89,7 +106,7 @@ const UpdatePassword = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               placeholder="Enter Password"
-              className="h-[7vh] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+              className="h-[60px] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
             />
           
             <span onClick={() => setShowConfirmPassword((prev) => !prev)} className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer">
@@ -131,8 +148,8 @@ const UpdatePassword = () => {
           })}
         </div>
 
-        <div className="btn w-full mt-4  flex justify-center rounded-xl items-center bg-[#FFD60A]">
-          <button className="text-black h-[6vh]  font-[550]">
+        <div className="btn  w-full mt-4  flex justify-center rounded-xl items-center bg-[#FFD60A]">
+          <button className="text-black cursor-pointer text-lg h-[50px]  font-bold">
             Reset Password
           </button>
         </div>

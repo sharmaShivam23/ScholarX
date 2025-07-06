@@ -8,12 +8,18 @@ import {forgotpassword } from '../services/apis';
 import { setLoading } from '../slices/authSlice';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
+import { useParams } from "react-router-dom";
 
 const ForgotPassword = ({setupdatepasswordToken}) => {
   const dispatch = useDispatch()
   const [emailSent , setEmailSent] = useState(false)
   const [email , setEmail] = useState("")
   
+
+  const { updatepasswordToken } = useParams();
+  console.log("Reset Token:", updatepasswordToken);
+
+
 
 
  async function handleForm(e){
@@ -42,7 +48,7 @@ const ForgotPassword = ({setupdatepasswordToken}) => {
     
   }
   return (
-    <div className='flex justify-center text-white bg-[#000814] gap-5 flex-col h-[92vh] items-center'>
+    <div className='flex justify-center h-screen text-white bg-[#000814] gap-5 flex-col  items-center'>
      
      <div className=" text-left">
      <p className='text-3xl  font-bold text-white'>
@@ -68,7 +74,7 @@ const ForgotPassword = ({setupdatepasswordToken}) => {
              value={email}
              onChange={(e) => setEmail(e.target.value)}
              placeholder="Enter email"
-             className="md:w-[30vw] max-[300px]:w-full w-[300px] h-[7vh] bg-[#161D29] pl-3 placeholder:font-[600]  rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+             className="md:w-[30vw] max-[300px]:w-full w-[300px] h-[60px] bg-[#161D29] pl-3 placeholder:font-[600]  rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
            />
          </div>
        </div>
@@ -76,7 +82,7 @@ const ForgotPassword = ({setupdatepasswordToken}) => {
 
      <div className="btn w-full cursor-pointer">
      <div className={`btn  mt-4 ${emailSent ? "sm:w-[30vw] w-[60vw]" : "w-full"}  flex justify-center rounded-xl hover:scale-95 cursor-pointer transition-all ease-out duration-100 items-center bg-[#FFD60A]`}>
-            <button  className="text-black  h-[6vh] cursor-pointer  font-[550]">
+            <button  className="text-black  h-[60px]  cursor-pointer  font-bold">
             {!emailSent ? " Reset Password" : "Resend email"}
             </button>
           </div>

@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 const Signup = () => {
   const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [accountType, setSelectedRole] = useState("");
+  const [accountType, setSelectedRole] = useState("Student");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -60,7 +60,7 @@ const Signup = () => {
     }
     console.log(formData);
     dispatch(setLoading(true));
-    const toastId = toast.loading("Sending reset link...");
+    const toastId = toast.loading("Signing in...");
     try {
       const result = await apiConnect("POST", sendOTP.OTP_API, {
         email: formData.email,
@@ -124,7 +124,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup mt-16 bg-[#000814] px-6 gap-6 mt- sm:px-32 flex text-white py-10 sm:flex-row flex-col w-[100vw]">
+    <div className="signup  mt-16 bg-[#000814] px-6 gap-6 mt- sm:px-32 flex text-white py-10 sm:flex-row flex-col w-[100vw]">
       <div className="left w-full sm:w-1/2  sm:px-16">
         <p className="head text-4xl text-white font-[550] sm:max-w">
           Join the millions learning to code with StudyNotion for free
@@ -134,7 +134,7 @@ const Signup = () => {
           <HighlightText text="Education to future-proof your career." />
         </div>
 
-        <div className="role text-[#AFB2BF] sm:w-[18vw]  h-[7vh] bg-[#161D29] rounded-4xl mt-10 text-xl flex justify-center items-center gap-12">
+        <div className="role text-[#AFB2BF] sm:w-[18vw]  h-[60px] bg-[#161D29] rounded-4xl mt-10 text-xl flex justify-center items-center gap-12">
           <p
             className={`cursor-pointer ${
               accountType == "Student" ? "bg-[#000814] text-white" : ""
@@ -154,8 +154,8 @@ const Signup = () => {
         </div>
 
         <form onSubmit={handleForm}>
-          <div className="1 flex justify-center   items-center gap-5 mt-8">
-            <div className="flex justify-center flex-col w-1/2">
+          <div className="1 flex justify-center sm:flex-row flex-col   items-center gap-2 sm:gap-5 mt-8">
+            <div className="flex justify-center flex-col w-full sm:w-1/2">
               <label htmlFor="field1" className="text-lg mb-1.5 font-[600]">
                 First Name
               </label>
@@ -166,11 +166,11 @@ const Signup = () => {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 placeholder="Enter first name"
-                className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
 
-            <div className="flex justify-center flex-col w-1/2">
+            <div className="flex justify-center mt-2 sm:mt-0 flex-col w-full sm:w-1/2">
               <label htmlFor="field2" className="text-lg mb-1.5 font-[600]">
                 Last Name
               </label>
@@ -181,15 +181,15 @@ const Signup = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Enter last name"
-                className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
           </div>
 
-          <div className="email mt-5">
+          <div className="email mt-3">
             <div className="email  flex flex-col gap-2">
               <label htmlFor="email1" className="text-lg font-[600]">
-                Email
+                Email Id
               </label>
               <input
                 type="email"
@@ -198,13 +198,13 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Enter email"
-                className="w-full h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className="w-full h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
           </div>
 
-          <div className="1 flex justify-center   items-center gap-5 mt-5">
-            <div className="flex justify-center flex-col w-1/2">
+          <div className="1 flex justify-center  flex-col sm:flex-row  items-center gap-2 sm:gap-5 mt-5">
+            <div className="flex justify-center flex-col w-full sm:w-1/2">
               <label htmlFor="pass" className="text-lg mb-1.5 font-[600]">
                 Create Password
               </label>
@@ -215,11 +215,11 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter Password"
-                className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
 
-            <div className="flex justify-center flex-col w-1/2">
+            <div className="flex justify-center mt-2 sm:mt-0 flex-col w-full sm:w-1/2">
               <label htmlFor="pass2" className="text-lg mb-1.5 font-[600]">
                 Confirm Pasword
               </label>
@@ -230,23 +230,28 @@ const Signup = () => {
                 value={formData.confirmpassword}
                 onChange={handleInputChange}
                 placeholder="Enter Password"
-                className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
           </div>
 
-          <div className="btn w-full mt-4  flex justify-center rounded-xl items-center bg-[#FFD60A]">
-            <button className="text-black cursor-pointer h-[6vh]  font-[550]">
+          <button className="btn  w-full h-[60px] text-black font-bold text-lg mt-6 cursor-pointer  flex justify-center rounded-xl items-center bg-[#FFD60A]">
+           
+              Create Account
+
+          </button>
+          {/* <div className="btn w-full mt-4 cursor-pointer  flex justify-center rounded-xl items-center bg-[#FFD60A]">
+            <button className="text-black cursor-pointer  h-[6vh]  font-[550]">
               Create Account
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
 
-      <a href="http://localhost:3000/auth/google">
+      <a className="hidden" href="http://localhost:3000/auth/google">
         <button>Login with Google</button>
       </a>
-      <a href="http://localhost:3000/auth/logout">
+      <a className="hidden" href="http://localhost:3000/auth/logout">
   <button>Logout</button>
 </a>
 

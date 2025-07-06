@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate()
-  const [selectedRole, setSelectedRole] = useState("Student");
+  // const [selectedRole, setSelectedRole] = useState("Student");
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token);
   const profileImage = useSelector((state) => state.auth.profileImage);
@@ -29,7 +29,8 @@ const Login = () => {
   const handleInputChange = (e) => {
     const {name , value} = e.target
 
-    setFormData((prev) => ({...prev , [name] : value , selectedRole}))
+    setFormData((prev) => ({...prev , [name] : value}))
+    // setFormData((prev) => ({...prev , [name] : value , selectedRole}))
   }
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const Login = () => {
 
   return (
     <div className="signup bg-[#000814] px-6 gap-6  sm:px-32 flex h-auto sm:h-[100vh] text-white py-10 sm:flex-row flex-col w-[100vw]">
-      <div className="left w-full sm:w-1/2 mt-24  sm:px-16">
+      <div className="left w-full sm:w-1/2 sm:mt-32 mt-20  sm:px-16">
         <p className="head text-4xl text-white font-[550] sm:max-w">
           Welcome back
         </p>
@@ -80,7 +81,7 @@ const Login = () => {
           <HighlightText text="Education to future-proof your career." />
         </div>
 
-        <div className="role text-[#AFB2BF] sm:w-[18vw]  h-[7vh] bg-[#161D29] rounded-4xl mt-10 text-xl flex justify-center items-center gap-12">
+        {/* <div className="role text-[#AFB2BF] sm:w-[18vw]  h-[7vh] bg-[#161D29] rounded-4xl mt-10 text-xl flex justify-center items-center gap-12">
           <p
             className={`cursor-pointer ${
               selectedRole == "Student" ? "bg-[#000814] text-white" : ""
@@ -97,13 +98,13 @@ const Login = () => {
           >
             Instructor
           </p>
-        </div>
+        </div> */}
 
         <form onSubmit={handleForm}>
          
           
 
-          <div className="email mt-5.5">
+          <div className="email mt-12">
             <div className="email  flex flex-col gap-2">
               <label htmlFor="email" className="text-lg font-[600]">
                 Email
@@ -115,7 +116,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Enter email"
-                className="w-full h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className="w-full h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
           </div>
@@ -135,7 +136,7 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter Password"
-                className=" h-[7vh] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
             </div>
            
@@ -148,7 +149,7 @@ const Login = () => {
           </Link>
 
           <div className="btn w-full mt-7  flex justify-center rounded-xl items-center bg-[#FFD60A]">
-              <button className="text-black cursor-pointer h-[6vh]  font-[550]">Sign In</button>
+              <button className="text-black cursor-pointer h-[60px] text-lg font-bold">Sign In</button>
             </div>
 
         </form>

@@ -38,7 +38,8 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true }
     );
 
-    const url = `http://localhost:5174/updatepassword/${token}`
+    // const url = `https://scholar-x.vercel.app/updatepassword/${token}`
+    const url = `http://localhost:5173/updatepassword/${token}`
      // ✅ Fixed URL (was https:localhost)
 
     // Send email

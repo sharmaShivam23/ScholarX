@@ -58,12 +58,15 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
-        {updatepasswordToken && (
+        {/* {updatepasswordToken && (
           <Route
-            path={`/updatepassword/${updatepasswordToken}`}
+            path={`/updatepassword/:updatepasswordToken`}
+            // path={`/updatepassword/${updatepasswordToken}`}
             element={<UpdatePassword />}
           />
-        )}
+        )} */}
+        <Route path="/updatepassword/:updatepasswordToken" element={<UpdatePassword />} />
+
 
       
 
