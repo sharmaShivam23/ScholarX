@@ -91,7 +91,16 @@ const SubSection = ({nextPage , setNextPage}) => {
 
         // dispatch(setTotalSubSections([...TotalSubSections, ...newSubSections]));
         const newSection = response?.data.createSub;  // already correct
-dispatch(setTotalSubSections([...TotalSubSections, newSection]));
+// dispatch(setTotalSubSections([...TotalSubSections, newSection]));
+const newSubsection = response?.data?.createSub; // this is the created subsection
+  const sectionId = formData.sectionId;
+dispatch(setTotalSubSections({
+    ...TotalSubSections,
+    [sectionId]: [
+      ...(TotalSubSections[sectionId] || []),
+      newSubsection,
+    ]
+  }));
       }
     } catch (Error) {
       console.log(Error);

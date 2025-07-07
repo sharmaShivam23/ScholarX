@@ -191,7 +191,7 @@ const CourseForm2 = () => {
   };
 
   return (
-    <div className="md:w-[45vw]  w-[100vw] h-auto  flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
+    <div className="md:w-[45vw]  max-w-[95%] mb-10 m-auto h-auto  flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
       <form action="">
         <h1 className="text-3xl font-semibold">Course Builder</h1>
         <div className="flex justify-center mt-10 flex-col w-full md:w-[40vw] gap-5">
@@ -248,7 +248,8 @@ const CourseForm2 = () => {
 
                 {showSubsection && (
                   <>
-                    {TotalSubSections.map((subSection, subIndex) => (
+                    {TotalSubSections[section._id]?.map((subSection, subIndex) => (
+                    // {TotalSubSections.map((subSection, subIndex) => (
                       <div key={subSection._id || subIndex} className="sub">
                         <div className="p bg-[#424854] h-auto p-5 mt-5 rounded-2xl">
                           <div className="icon mb-1 flex text-xl">

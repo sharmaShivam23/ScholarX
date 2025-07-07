@@ -152,6 +152,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { ImCross } from "react-icons/im";
 import { setCategoryId } from "../../slices/CategoryCourse";
 import { TbMenuOrder } from "react-icons/tb";
+import { setCoursePath } from "../../slices/CategoryCourse";
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
@@ -160,6 +161,7 @@ const Navbar = () => {
   const [hoverList, setHoverList] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [subLinks, setSubLinks] = useState([]);
+ 
   const dispatch = useDispatch();
 
   const fetchSubmit = async () => {
@@ -175,9 +177,10 @@ const Navbar = () => {
     fetchSubmit();
   }, []);
 
-  const handleClick = (id) => {
+  const handleClick = (id , path)  => {
     dispatch(setCategoryId(id));
-    setMenuOpen(false); // Close menu on selection
+    dispatch(setCoursePath(path))
+    setMenuOpen(false);
   };
 
   return (
@@ -208,7 +211,8 @@ const Navbar = () => {
                         subLinks.map((cat, i) => (
                           <Link to={`/catalog/${cat.name}`} key={i}>
                             <p
-                              onClick={() => handleClick(cat._id)}
+                            key={i}
+                              onClick={() => handleClick(cat._id , cat.name)}
                               className="hover:bg-yellow-500 p-2 px-4 rounded-md font-semibold text-black"
                             >
                               {cat.name}

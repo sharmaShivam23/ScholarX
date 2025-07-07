@@ -48,7 +48,7 @@ const CourseForm3 = () => {
   };
 
   return (
-    <div className="bg-[#2C333F] w-full max-w-[600px] mx-auto rounded-xl p-8 mt-10 shadow-md">
+    <div className="bg-[#2C333F] max-w-[95%] mb-10 m-auto w-full lg:max-w-[600px] mx-auto rounded-xl p-8 mt-10 shadow-md">
       <h2 className="text-2xl font-semibold text-white mb-6">Publish Settings</h2>
 
       <div className="flex items-start space-x-3 mb-8">

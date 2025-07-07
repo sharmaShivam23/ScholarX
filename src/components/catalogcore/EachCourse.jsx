@@ -32,7 +32,7 @@ const EachCourse = () => {
   const handleIconClick = (index) => {
     seticonup((prev) => ({
       ...prev,
-      [index]: !prev[index], // Toggle that specific section
+      [index]: !prev[index],
     }));
   };
 

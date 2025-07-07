@@ -116,12 +116,12 @@ const Sidebar = () => {
   return (
     <>
 
-      <div onClick={handleMenu} className="icon  flex md:hidden text-4xl font-bold  h-screen text-white fixed z-[100] top-16 left-5">
+      <div onClick={handleMenu} className="icon   flex md:hidden text-4xl font-bold  h-screen text-white fixed z-[100] top-[65px] left-3">
            {hideMenu ?  <CgMenuRound/> : <RxCrossCircled/>} 
           </div>
     
       
-      <div className="w-[14vw]  z-50 hidden fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:flex flex-col gap-2 text-center">
+      <div className="w-[14vw] border-2  border-[#424854]  z-50 hidden fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:flex flex-col gap-2 text-center">
         {Sidebardata.map((item, index) => {
           if (item.type && user?.accountType !== item.type) return null;
           return renderSidebarItem(item, index);
@@ -130,7 +130,7 @@ const Sidebar = () => {
 
       
       {!hideMenu && (
-        <div className="w-[70vw] mt-10 z-50 fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:hidden flex flex-col gap- text-center">
+        <div className={`w-[70vw]  mt-10 border-2  border-[#424854] z-50 fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:hidden flex flex-col gap- text-center`}>
           {Sidebardata.map((item, index) => {
             if (item.type && user?.accountType !== item.type) return null;
             return renderSidebarItem(item, index);

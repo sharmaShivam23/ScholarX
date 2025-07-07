@@ -6,7 +6,8 @@ const initialState = {
   courseId : null,
   CourseData : null,
   videourl : null,
-  content : null
+  content : null,
+  coursePath : null
 };
 
 const CategorySlice = createSlice({
@@ -29,11 +30,14 @@ const CategorySlice = createSlice({
   ,
   setContent(state , action){
     state.content = action.payload
+  },
+  setCoursePath(state , action){
+    state.coursePath = action.payload
   }
   
 
 }
 });
 
-export const { setCategoryId  , setCourseId , setCourseData , setVideoUrl , setContent} = CategorySlice.actions;
+export const { setCategoryId  , setCourseId , setCourseData , setVideoUrl , setContent , setCoursePath} = CategorySlice.actions;
 export default CategorySlice.reducer;

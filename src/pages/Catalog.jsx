@@ -7,13 +7,16 @@ import { CategoryCourse } from "../services/apis";
 import { apiConnect } from "../services/apiconnect";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Catalog = () => {
-  const { CategoryId } = useSelector((state) => state.Category);
+  const { CategoryId  , coursePath} = useSelector((state) => state.Category);
   const [courses, setCourses] = useState([]);
   const [name, setname] = useState([]);
   const [des, setdes] = useState([]);
+  const navigate = useNavigate()
 
+  
   useEffect(() => {
     console.log("course", courses);
   }, [CategoryId]);
@@ -38,6 +41,7 @@ const Catalog = () => {
           setname(response?.data?.response?.name);
           setdes(response?.data?.response?.description);
           toast.success("Courses loaded", { id: toastId });
+          // navigate(`/catalog/${coursePath}`)
         } else {
           toast.error(response?.data?.message || "Failed to fetch courses", {
             id: toastId,
