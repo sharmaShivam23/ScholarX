@@ -183,19 +183,33 @@ exports.login = async (req, res) => {
 
     // Cookie options
     const options = {
-      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
-      httpOnly: true,
-    };
+  expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days
+  httpOnly: true,
+  secure: true,       // ✅ Required for HTTPS
+  sameSite: "None",   // ✅ Required for cross-origin
+};
+
 
     const User = await existEmail.populate("additionalDetails")
 
+    
+
     // Send cookie and response
-    return res.cookie("token", token, options).status(200).json({
-      success: true,
-      token,
-      user: User,
-      message: "User successfully logged in",
-    });
+   return res
+  .cookie("token", token, {
+    expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  })
+  .status(200)
+  .json({
+    success: true,
+    token,
+    user: User,
+    message: "User successfully logged in",
+  });
+
 
   } catch (err) {
     console.log("Login error:", err);

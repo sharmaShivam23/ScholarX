@@ -23,7 +23,7 @@ const CourseForm1 = () => {
   const [categoryData, setCategoryData] = useState([]);
   const dispatch = useDispatch();
 
-  const userId = user._id;
+
 
   const [formData, setFormData] = useState({
     courseName: "",
@@ -138,6 +138,8 @@ const CourseForm1 = () => {
         }
       );
       console.log(response);
+      console.log("i",token);
+      
       
       toast.success(response?.data?.message, {id : toastId})
       if(response?.data?.success == true){

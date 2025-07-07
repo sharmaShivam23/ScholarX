@@ -32,19 +32,43 @@ const limiter = rateLimit({
   max: 3,
   message: {
     success: false,
-    message: "Too many registration attempts. Please try again after an hour."
+    message: "Too many OTP attempts. Please try again after an hour."
   },
   standardHeaders: true,
   legacyHeaders: false,
 });
 exports.limiter = limiter;
 
+const Signuplimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 3,
+  message: {
+    success: false,
+    message: "Too many Signup attempts. Please try again after an hour."
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+exports.Signuplimiter = Signuplimiter;
+
+const Tokenlimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 3,
+  message: {
+    success: false,
+    message: "Too many  attempts. Please try again after an hour."
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+exports.Tokenlimiter = Tokenlimiter;
+
 
 
 // Auth Routes*
 router.post('/send-otp', limiter ,  sendOTP);
-router.post('/signup', limiter ,  signUp);
-router.post('/login', limiter ,  login);
+router.post('/signup', Signuplimiter ,  signUp);
+router.post('/login' ,  login);
 router.post('/change-password', changePassword);
 
 // Category Routes*
@@ -81,7 +105,7 @@ router.put('/update-subsection', updatedSubSection);
 router.delete('/delete-subsection', deletesubSection);
 
 // Password Reset Routes*
-router.post('/reset-password-token', limiter ,  resetPasswordToken);
+router.post('/reset-password-token', Tokenlimiter ,  resetPasswordToken);
 router.post('/reset-password', resetPassword)
 router.put('/update-password', updatePassword)
 
