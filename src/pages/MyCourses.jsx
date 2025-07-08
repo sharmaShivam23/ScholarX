@@ -1,142 +1,144 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import YellowIconBtn from "../components/cores/Homepage/YellowIconBtn";
 import { IoIosAddCircle } from "react-icons/io";
-import { useEffect } from "react";
-import { getInstructorCourses } from "../services/apis";
-import { apiConnect } from '../services/apiconnect';
+import { getInstructorCourses, deleteCourse } from "../services/apis";
+import { apiConnect } from "../services/apiconnect";
 import { useSelector } from "react-redux";
-import { FaClock } from "react-icons/fa";
+import { FaClock, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import { deleteCourse } from "../services/apis";
 import toast from "react-hot-toast";
-//  DELETE_COURSE_API
-const MyCourses = () => {
 
-  const {user} = useSelector((state) => state.profile)
+const MyCourses = () => {
+  const { user } = useSelector((state) => state.profile);
+  const navigate = useNavigate();
+  const [courses, setCourse] = useState([]);
+
   const handleClick = () => {
     navigate("/dashboard/add-course");
-  }
-  const navigate = useNavigate();
-  const [courses , setCourse] = useState([])
+  };
+
   const getCourses = async () => {
     try {
       const response = await apiConnect(
         "GET",
         getInstructorCourses(user._id).INSTRUCTOR_COURSES_API
-      )
-      console.log("r",response);
-      setCourse(response?.data?.data)
+      );
+      setCourse(response?.data?.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-
+  const handleDelete = async (courseId) => {
+    const toastId = toast.loading("Deleting course...");
+    try {
+      const response = await apiConnect("DELETE", deleteCourse.DELETE_COURSE_API, {
+        courseId,
+        userId: user._id,
+      });
+      toast.success(response?.data?.message, { id: toastId });
+      getCourses();
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.response?.data?.message, { id: toastId });
+    }
+  };
 
   useEffect(() => {
     getCourses();
   }, []);
 
-  const handleDelete = async (courseId) => {
-    const toastId = toast.loading("Deleting course...");
-    console.log("Deleting course with ID:", courseId);
-   
-    try{
-    const response = await apiConnect("DELETE", deleteCourse.DELETE_COURSE_API, { courseId , userId: user._id });
-     toast.success(response?.data?.message, { id: toastId });
-     getCourses()
-    console.log(response);
-    
-    }catch(err){
-      console.log(err);
-      toast.error(err?.response?.data?.message, { id: toastId });
-      
-    }
-  }
-
-
   return (
-    <div className="md:max-w-[85vw] overflow-x-hidden w-full p-10 md:p-20 ml-auto h-screen mt-16">
-      <div className="content w-full md:max-w-[60vw] m-auto">
-        {/* head */}
-        <div className="hea flex-col sm:flex-row justify-center   flex md:justify-between">
-          <p className="text-3xl font-semibold text-white flex justify-center items-center">
-            My Courses
-          </p>
-          <div onClick={handleClick} className="btn">
+    <div className="w-full min-h-screen md:max-w-[85vw] border-2  ml-auto p-4 md:p-10 lg:p-20 mt-16 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+          <h1 className="text-3xl sm:text-3xl font-semibold text-white">My Courses</h1>
+          <div onClick={handleClick}>
             <YellowIconBtn text="Add Course" icon={<IoIosAddCircle />} />
           </div>
         </div>
 
-        {/* table */}
-
-        <div className="tb mt-14">
-          <div className="head font-semibold text-lg">
-            {/* head */}
-            <ul className="sm:flex hidden border-[0.5px]  border-[#999DAA] p-3 text-[#999DAA] justify-between ">
-              <div className="flex">
-                <li className="mr-4">COURSES</li>
-              </div>
-
-              <div className="flex gap-8">
-                <li>DURATION</li>
-                <li>PRICE</li>
-                <li>ACTIONS</li>
-              </div>
-            </ul>
+        {/* Table Header */}
+        <div className="hidden sm:flex border border-[#999DAA] text-[#999DAA] font-semibold text-sm sm:text-base mt-10 px-4 py-3 justify-between">
+          <div>COURSES</div>
+          <div className="flex gap-6 sm:gap-10">
+            <span>DURATION</span>
+            <span>PRICE</span>
+            <span>ACTIONS</span>
           </div>
+        </div>
 
-          {/* course */}
-           {courses.length > 0 ? (
-           courses.map((courseDetail , index) => (
-          <div key={index} className="course h-auto  text-lg text-[#999DAA] sm:flex-row flex-col flex justify-between border-[1px] border-t-0 border-[#999DAA] p-5">
-            <div className="left flex gap-8">
-              {/* <div className="img w-[250px] rounded-sm h-[150px] bg-green-50">
-                <img
-                  src={courseDetail?.thumbnail}
-                  className="object-contain w-full h-full"
-                  alt=""
-                />
-              </div> */}
-             <div className="relative w-[250px] aspect-video rounded-sm overflow-hidden bg-green-50">
-  <img
-    src={courseDetail?.thumbnail}
-    className="absolute top-0 left-0 w-[250px] h-full object-cover"
-    alt=""
-  />
-</div>
+        {/* Course List */}
+        <div className="flex flex-col gap-6 mt-6">
+          {courses.length > 0 ? (
+            courses.map((courseDetail, index) => (
+              <div
+                key={index}
+                className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-6 border border-[#999DAA] border-t-0 p-4 sm:p-6 rounded-md bg-[#1C1F26]"
+              >
+                {/* Left Side - Image + Info */}
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  {/* Thumbnail */}
+                  <div className="relative w-full sm:w-[250px] aspect-video rounded-md overflow-hidden bg-green-50">
+                    {/* <img
+                      src={courseDetail?.thumbnail}
+                      className="absolute w-full h-full object-cover"
+                      alt="Course Thumbnail"
+                    /> */}
+                    <div
+  className="w-[250px] aspect-video rounded-sm bg-center bg-cover bg-no-repeat"
+  style={{ backgroundImage: `url(${courseDetail?.thumbnail})` }}
+></div>
 
+                  </div>
 
-              <div className="details text-start">
-                <ul className="flex  text-white font-semibold justify-evenly gap-3 flex-col">
-                  <li>{courseDetail?.courseName}</li>
-                  <li>{courseDetail?.whatYouWillLearn}</li>
-                  <li>Created : {new Date(courseDetail?.createdAt).toLocaleString()}</li>
-                  <li className={`flex font-bold gap-2 text-sm bg-[#2C333F] px-2  max-w-max p-1 rounded-xl  ${courseDetail.status == "Draft" ?  "text-[#F37290]" : "text-green-400"}`}><FaClock className="mt-1"/> {courseDetail?.status}</li>
-                  {/* <li>{courseDetail?.price}</li> */}
-                </ul>
-              </div>
-            </div>
-
-            <div className="right">
-              <ul className="flex gap-10 text-xl font-semibold ">
-                <li>{courseDetail?.duration ||`${Math.floor(Math.random()*10)}h  ${Math.floor(Math.random()*61)}min`}</li>
-                <li>{courseDetail?.price || "1000"}</li>
-                <div className="i flex justify-center items-center gap-4 text-2xl">
-                <li onClick={() => handleDelete(courseDetail._id)} className="cursor-pointer hover:text-red-500 transition-all ease-in-out duration-700 hover:scale-110"><RiDeleteBin2Fill/></li>
-                <li  className="cursor-pointer transition-all hover:text-green-400 ease-in-out duration-700 hover:scale-110"><FaEdit/></li>
+                  {/* Details */}
+                  <div className="text-white font-medium text-sm sm:text-base space-y-2">
+                    <div>{courseDetail?.courseName}</div>
+                    <div className="text-[#BBBBBB]">{courseDetail?.whatYouWillLearn}</div>
+                    <div>Created: {new Date(courseDetail?.createdAt).toLocaleString()}</div>
+                    <div
+                      className={`flex items-center gap-2 text-xs font-bold px-3 py-1 w-max rounded-xl ${
+                        courseDetail.status === "Draft" ? "text-[#F37290]" : "text-green-400"
+                      } bg-[#2C333F]`}
+                    >
+                      <FaClock />
+                      {courseDetail?.status}
+                    </div>
+                  </div>
                 </div>
-              </ul>
-            </div>
-          </div>
-          ))
+
+                {/* Right Side - Actions */}
+                <div className="flex items-center justify-between sm:justify-end gap-6 sm:gap-10 text-white font-semibold text-base sm:text-lg">
+                  <div>{courseDetail?.duration || `${Math.floor(Math.random() * 10)}h ${Math.floor(Math.random() * 61)}min`}</div>
+                  <div>{courseDetail?.price || "1000"}</div>
+                  <div className="flex gap-4 text-xl">
+                    <button
+                      onClick={() => handleDelete(courseDetail._id)}
+                      className="text-red-500 hover:scale-110 transition"
+                      title="Delete"
+                    >
+                      <RiDeleteBin2Fill />
+                    </button>
+                    <button
+                      onClick={() => navigate(`/dashboard/edit-course/${courseDetail._id}`)}
+                      className="text-green-400 hover:scale-110 transition"
+                      title="Edit"
+                    >
+                      <FaEdit />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
           ) : (
-            <h1 className="text-4xl font-bold text-white flex justify-center items-center mt-10">No Course found</h1>
+            <h1 className="text-center text-2xl sm:text-4xl font-bold text-white mt-10">
+              No Course Found
+            </h1>
           )}
         </div>
-        
       </div>
     </div>
   );

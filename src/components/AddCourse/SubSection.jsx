@@ -61,6 +61,10 @@ const SubSection = ({nextPage , setNextPage}) => {
   const handleCross = () => {
     dispatch(setSubSectionToggle(false));
   };
+   
+   const handleVideoClick = () => {
+    setFormData((prev) => ({ ...prev, video: null }));
+   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +74,12 @@ const SubSection = ({nextPage , setNextPage}) => {
     form.append("title", formData.title);
     form.append("description", formData.description);
     form.append("sectionId", formData.sectionId);
+    
+
+    if(!valid()){
+      return
+    }
+
     const toastId = toast.loading("Creating Sub-Section for your Course...");
 
     try {
@@ -85,13 +95,7 @@ const SubSection = ({nextPage , setNextPage}) => {
         // dispatch(setState(3)); 
         setNextPage(true)
         // Assuming this is to set the state to "2" after creating a subsection
-        //  dispatch(setTotalSubSections([...TotalSubSections, ...response?.data?.updatedSubSection?.SubSection]))
-        // const newSubSections =
-        //   response?.data?.updatedSubSection?.subSection || [];
-
-        // dispatch(setTotalSubSections([...TotalSubSections, ...newSubSections]));
-        const newSection = response?.data.createSub;  // already correct
-// dispatch(setTotalSubSections([...TotalSubSections, newSection]));
+        const newSection = response?.data.createSub;  
 const newSubsection = response?.data?.createSub; // this is the created subsection
   const sectionId = formData.sectionId;
 dispatch(setTotalSubSections({
@@ -107,6 +111,26 @@ dispatch(setTotalSubSections({
       toast.error(Error?.response?.data?.message, { id: toastId });
     }
   };
+
+  const valid = () => {
+    if(!formData.video){
+      toast.error("Uploaded Video is required")
+      return false;
+    }
+
+    if(!formData.title){
+       toast.error("Title is required")
+      return false;
+    }
+
+    if(!formData.description){
+       toast.error("Description is required")
+      return false;
+    }
+
+    return true
+
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#161D29]/60 backdrop-blur-sm">
@@ -127,13 +151,16 @@ dispatch(setTotalSubSections({
             >
               Video
             </label>
-            <div className="w-full h-[150px] bg-[#2C333F] border border-dashed border-white flex items-center justify-center rounded-xl cursor-pointer overflow-hidden">
+            <div className="w-full h-[250px] bg-[#2C333F] border border-dashed border-white flex items-center justify-center rounded-xl cursor-pointer overflow-hidden">
               {formData.video ? (
+                <div className="flex flex-col">
                 <video
                   src={videoPreviewUrl}
-                  className="w-full h-full object-cover rounded-xl"
+                  className="w-full h-full object-contain rounded-xl"
                   controls
                 />
+                
+                </div>
               ) : (
                 <label
                   htmlFor="video"
@@ -158,6 +185,8 @@ dispatch(setTotalSubSections({
               />
             </div>
           </div>
+
+          <div onClick={handleVideoClick} className="p text-white cursor-pointer z-50 text-center underline">Cancel</div>
 
           {/* Title Input */}
           <div className="mb-6">

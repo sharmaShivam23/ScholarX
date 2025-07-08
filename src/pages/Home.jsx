@@ -23,7 +23,7 @@ const Home = () => {
       {/* section1 */}
       <div className="sec1 flex justify-center items-center mt-4 p-7  sm:p-16 flex-col">
         <div className="btn shadow-[0px_1px_2px_rgba(255,255,255,0.6)]  flex border- bg-[#161D29]  sm:p- sm:px-8 px-5 py-3 rounded-4xl text-[#999DAA]">
-          <p className="txt text-[#999DAA] font-[500] text-xs sm:text-lg">
+          <p className="txt text-[#999DAA] font-[500] flex items-center text-xs sm:text-lg">
             Become an Instructor
           </p>
           <div className="icon flex justify-center items-center ml-2 sm:mt-1.5 mt-1 text-[#999DAA] font-bold">
@@ -53,7 +53,6 @@ const Home = () => {
       {/* section2 */}
       <div className="img sm:p-10 m-8">
         <video
-          controls
           autoPlay
           loop
           muted
@@ -150,34 +149,38 @@ const Home = () => {
         </div>
 
         {/* Right Section */}
-        <div className="right h-full w-full sm:w-1/2 ">
-        <div className="i relative">
-          <img
-            src={homeimg2}
-            className="w-full h-full object-cover"
-            alt="Background"
-          />
-          <div className="con w-[30vw] text-xs sm:text-lg text-left  font-bold h-[15vh] gap-10 absolute -bottom-15 left-34 flex justify-center items-center bg-[#014A32]">
-            <div className="flex justify-center items-center gap-5">
-              <div className="num text-5xl text-white">10</div>
-              <p className="txt text-[#05A77B]">
-                Years
-                <br />
-                Experiences
-              </p>
-            </div>
-            <div className="h-[6vh] border-2 border-[#05A77B] "></div>
-            <div className="flex justify-center items-center gap-5">
-              <div className="num text-5xl text-white">250</div>
-              <p className="txt text-[#05A77B]">
-                Types of
-                <br />
-                Courses
-              </p>
-            </div>
-          </div>
-          </div>
-        </div>
+       <div className="right h-full w-full sm:w-1/2">
+  <div className="relative h-full">
+    <img
+      src={homeimg2}
+      className="w-full h-full object-cover"
+      alt="Background"
+    />
+
+    {/* Overlay green box */}
+    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-[#014A32] w-[75%] sm:w-[80%] max-w-xl p-4 sm:p-6 r flex flex-col sm:flex-row items-center justify-around gap-4 shadow-lg">
+      {/* Experience Section */}
+      <div className="flex items-center gap-3 sm:gap-5">
+        <div className="text-2xl sm:text-5xl text-white font-bold">10</div>
+        <p className="text-[#05A77B] text-xs sm:text-base font-semibold">
+          Years <br /> Experiences
+        </p>
+      </div>
+
+      {/* Divider */}
+      <div className="md:h-[80px] h-[35px] w-[2px] bg-[#05A77B] hidden sm:block"></div>
+
+      {/* Courses Section */}
+      <div className="flex items-center gap-3 sm:gap-5">
+        <div className="text-2xl sm:text-5xl text-white font-bold">250</div>
+        <p className="text-[#05A77B] text-xs sm:text-base font-semibold">
+          Types of <br /> Courses
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
       </div>
 
       <div className="sec7 h-auto mt-0 text-black bg-white w-full p-10">

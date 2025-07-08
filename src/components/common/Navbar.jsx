@@ -188,7 +188,9 @@ const Navbar = () => {
       <div className="flex justify-between items-center px-4 py-3 md:px-10 h-[8vh]">
         {/* Logo */}
         <div className="flex items-center gap-2 text-xl font-bold">
-          <div className="text-yellow-400">$</div>
+          <div className="text-yellow-400">$
+           {/* <video src="/contactvideo.mp4" loop autoPlay  className="h-10 w-10 object-contain"></video> */}
+          </div>
           <div>ScholarX</div>
         </div>
 

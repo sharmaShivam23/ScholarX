@@ -32,7 +32,7 @@ const CourseForm2 = () => {
   const userId = user._id;
   const [editSectionName, setEditSectionName] = useState(false);
   const [subSectionVisible, setSubSectionVisible] = useState(true);
-  const [showSubsection, setShowSubSection] = useState(true);
+  const [showSubsection, setShowSubSection] = useState({});
   const [nextPage , setNextPage] = useState(false)
   const dispatch = useDispatch();
   const {
@@ -81,10 +81,11 @@ const CourseForm2 = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!valid()) {
       return;
     }
-    e.preventDefault();
+    
 
     const finalFormData = {
       ...formData,
@@ -128,12 +129,16 @@ const CourseForm2 = () => {
   };
 
   const ClearForm = () => {
-    formData.sectionName = "";
-    setFormData(formData);
+    setFormData({ ...formData, sectionName: "" });
+    // setFormData(formData);
   };
 
-  const handleDropDownMenu = () => {
-    setShowSubSection((prev) => !prev);
+  const handleDropDownMenu = (sectionId) => {
+    // setShowSubSection((prev) => !prev);
+    setShowSubSection((prev) => ({
+    ...prev,
+    [sectionId]: !prev[sectionId],
+  }));
   };
 
   const handleSectionDelete = async (id) => {
@@ -192,7 +197,7 @@ const CourseForm2 = () => {
 
   return (
     <div className="md:w-[45vw]  max-w-[95%] mb-10 m-auto h-auto  flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
-      <form action="">
+      <form className="w-full" action="">
         <h1 className="text-3xl font-semibold">Course Builder</h1>
         <div className="flex justify-center mt-10 flex-col w-full md:w-[40vw] gap-5">
           {/* Title */}
@@ -230,8 +235,8 @@ const CourseForm2 = () => {
               >
                 <div className="icon mb-1 flex text-xl">
                   <RxDropdownMenu
-                    onClick={handleDropDownMenu}
-                    className="text-3xl cursor-pointer"
+                    onClick={() => handleDropDownMenu(section._id)}
+                    className="text-3xl  cursor-pointer"
                   />
                   <div className="p ml-3 text-lg w-full font-bold">
                     {section.sectionName}
@@ -246,7 +251,7 @@ const CourseForm2 = () => {
 
                 <hr />
 
-                {showSubsection && (
+                {showSubsection[section._id] && (
                   <>
                     {TotalSubSections[section._id]?.map((subSection, subIndex) => (
                     // {TotalSubSections.map((subSection, subIndex) => (
@@ -273,9 +278,9 @@ const CourseForm2 = () => {
 
                     <div
                       onClick={handleSubsectionOpen}
-                      className="add text-[#FFD60A] font-bold cursor-pointer flex gap-2 text-xl mt-5 ml-3"
+                      className="add text-[#FFD60A] font-bold items-center cursor-pointer flex gap-2 text-md mt-5 ml-3"
                     >
-                      <IoAddCircleSharp className="mt-1 text-2xl" /> Add Lecture
+                      <IoAddCircleSharp className=" text-lg items-center flex md:text-2xl" /> Add Lecture
                     </div>
                   </>
                 )}

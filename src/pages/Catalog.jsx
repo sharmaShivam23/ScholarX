@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import FirstPage from "../components/catalogcore/FirstPage";
 import CarouselCourses from "../components/catalogcore/CarouselCourses";
@@ -10,13 +8,12 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Catalog = () => {
-  const { CategoryId  , coursePath} = useSelector((state) => state.Category);
+  const { CategoryId, coursePath } = useSelector((state) => state.Category);
   const [courses, setCourses] = useState([]);
   const [name, setname] = useState([]);
   const [des, setdes] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  
   useEffect(() => {
     console.log("course", courses);
   }, [CategoryId]);
@@ -37,7 +34,13 @@ const Catalog = () => {
         console.log(response);
 
         if (response?.data?.success) {
-          setCourses(response?.data?.response?.course || []);
+          // setCourses(response?.data?.response?.course || []);
+          const allCourses = response?.data?.response?.course || [];
+          const publishedCourses = allCourses.filter(
+            (course) => course.status === "Published"
+          );
+          setCourses(publishedCourses);
+
           setname(response?.data?.response?.name);
           setdes(response?.data?.response?.description);
           toast.success("Courses loaded", { id: toastId });

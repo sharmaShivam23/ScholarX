@@ -307,13 +307,15 @@ const CourseForm1 = () => {
             <label htmlFor="thumbnail" className="text-md mb-1.5 font-[400]">
               Thumbnail
             </label>
-            <div className="w-full h-[150px] bg-[#2C333F] border border-dashed border-white flex items-center justify-center rounded-xl cursor-pointer">
+            <div className="w-full min-h-[200px] h-auto bg-[#2C333F] border border-dashed border-white flex items-center justify-center rounded-xl cursor-pointer">
               {formData.thumbnail ? (
                 <img
                   src={URL.createObjectURL(formData.thumbnail)}
                   alt={formData.thumbnail.name}
                   className="w-full h-full object-cover rounded-xl"
                 />
+              
+
               ) : (
                 <label
                   htmlFor="thumbnail"
