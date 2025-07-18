@@ -154,6 +154,7 @@ import { setCategoryId } from "../../slices/CategoryCourse";
 import { TbMenuOrder } from "react-icons/tb";
 import { setCoursePath } from "../../slices/CategoryCourse";
 
+
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);

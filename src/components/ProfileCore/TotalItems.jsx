@@ -1,17 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const TotalItems = () => {
-  return (
-    <div className='flex justify-center items-center gap-2 flex-col b bg-[#161D29] w-[18vw] rounded-lg h-[170px]'>
-       <div className="t text-[#AFB2BF] text-xl">Total:</div>
-       <p className="pr text-2xl text-[#FFD60A] font-semibold">$500</p>
-       <div className="btn">
-        <button className='w-[15vw] p-2 rounded-xl font-semibold  bg-[#FFD60A] text-black'>
-          Buy now
-        </button>
-       </div>
-    </div>
-  )
-}
+  const { cartItems } = useSelector((state) => state.cart);
 
-export default TotalItems
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+
+  return (
+    <div className="bg-[#161D29] p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Summary</h2>
+      <p className="mb-2 text-gray-300">Total Courses: {cartItems.length}</p>
+      <p className="mb-4 text-gray-300">Total Price: <span className="text-[#FFD60A] font-semibold">${totalPrice}</span></p>
+      <button className="w-full mt-4 py-2 bg-[#FFD60A] text-black font-semibold rounded hover:bg-yellow-400 transition-all duration-200">
+        Checkout
+      </button>
+    </div>
+  );
+};
+
+export default TotalItems;

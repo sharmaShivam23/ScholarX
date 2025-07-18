@@ -19,12 +19,13 @@ const cartSlice = createSlice({
       localStorage.setItem("totalItems", JSON.stringify(action.payload));
     },
     removeItem(state, action) {
-      const newItems = state.cartItems.filter(item => item.id !== action.payload);
-      state.cartItems = newItems;
-      state.totalItems = newItems.length;
-      localStorage.setItem("cartItems", JSON.stringify(newItems));
-      localStorage.setItem("totalItems", JSON.stringify(newItems.length));
-    }
+  const newItems = state.cartItems.filter(item => item._id !== action.payload);
+  state.cartItems = newItems;
+  state.totalItems = newItems.length;
+  localStorage.setItem("cartItems", JSON.stringify(newItems));
+  localStorage.setItem("totalItems", JSON.stringify(newItems.length));
+}
+
   }
 });
 

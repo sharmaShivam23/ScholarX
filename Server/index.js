@@ -7,10 +7,22 @@ const app = express()
 const fileUpload = require("express-fileupload")
 const passport = require("passport");
 const session = require("express-session");
+const helmet = require('helmet');
+const xssClean = require('xss-clean');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const compression = require('compression');
 require("./config/passport");
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(helmet());
+app.use(xssClean());
+app.use(hpp());
+// Prevent NoSQL injection
+app.use(mongoSanitize());
+app.use(compression());
 app.use(cors({
   origin : ["http://localhost:5173","http://localhost:3000","http://localhost:5174" , "https://scholar-x.vercel.app"],
   methods : ["GET","POST","PUT","DELETE"],
@@ -28,8 +40,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
-    secure: true,           // ✅ Required for HTTPS (Render)
-    sameSite: "none",       // ✅ Required for cross-origin cookies
+    secure: true,          
+    sameSite: "none",      
     httpOnly: true,
   }
 }));

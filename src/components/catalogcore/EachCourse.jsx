@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { BiSolidErrorCircle } from "react-icons/bi";
 import { ImSphere } from "react-icons/im";
@@ -10,10 +10,16 @@ import { FaArrowPointer } from "react-icons/fa6";
 import { IoTv } from "react-icons/io5";
 import { PiCertificateFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "../../slices/cartSlice";
+import { setTotalItems } from "../../slices/cartSlice";
+import toast from "react-hot-toast";
 
 const EachCourse = () => {
   const rating = (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
   const navigate = useNavigate()
+  const {cartItems} = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const users = Math.floor(Math.random() * 5000 + 500);
   const ratingsCount = Math.floor(Math.random() * 1000 + 100);
   const createdDate = new Date().toLocaleDateString("en-US", {
@@ -27,7 +33,24 @@ const EachCourse = () => {
 
   let courseId = CourseData?._id
 
- 
+  const handleAddToCart = (course) => {
+    console.log("course" , course);
+    
+  const alreadyAdded = cartItems.find(item => item.id === course.id);
+  
+  if (!alreadyAdded) {
+    useEffect(() => {
+    const updatedCart = [...cartItems, course];
+    dispatch(setCartItems(updatedCart));
+    dispatch(setTotalItems(updatedCart.length));
+    console.log("c",updatedCart);
+    
+    },[course])
+     toast.success("Course added successfully  in cart");
+  } else {
+    toast.error("Course already in cart");
+  }
+};
 
   const handleIconClick = (index) => {
     seticonup((prev) => ({
@@ -67,7 +90,7 @@ const EachCourse = () => {
         </div>
 
         <div className="text-white font-medium text-base">
-          Instructor : {`${CourseData?.Instructor.firstName}  ${CourseData?.Instructor.lastName}` || "Shivam Sharma"} 
+          Instructor : {`${CourseData?.Instructor?.firstName}  ${CourseData?.Instructor?.lastName}` || "Shivam Sharma"} 
         </div>
 
         <div className="flex flex-wrap gap-6 text-sm mt-2">
@@ -86,10 +109,10 @@ const EachCourse = () => {
 
       <div className="pay flex lg:hidden p-10">
          <div className="sec p-8 flex flex-col gap-4">
-          <div className="p text-2xl font-bold text-white">Rs. {CourseData.price}</div>
+          <div className="p text-2xl font-bold text-white">Rs. {CourseData?.price}</div>
           <div className="btn w-[200px]">
-            <button className="bg-[#FFD60A] cursor-pointer text-black font-semibold w-full rounded-sm p-2">
-              Add to Cart
+            <button onClick={() => handleAddToCart(CourseData)}  className="bg-[#FFD60A] cursor-pointer text-black font-semibold w-full rounded-sm p-2">
+              Add to Cart 
             </button>
           </div>
           <div onClick={handleVideoShow} className="btn w-[200px]">
@@ -200,10 +223,10 @@ const EachCourse = () => {
         </div>
 
         <div className="sec p-8 flex w-full flex-col gap-4">
-          <div className="p text-2xl font-bold text-white">Rs. {CourseData.price}</div>
+          <div className="p text-2xl font-bold text-white">Rs. {CourseData?.price}</div>
           <div className="btn w-full">
-            <button className="bg-[#FFD60A] cursor-pointer text-black font-semibold w-full rounded-sm p-2">
-              Add to Cart
+            <button onClick={() => handleAddToCart(CourseData)} className="bg-[#FFD60A] cursor-pointer text-black font-semibold w-full rounded-sm p-2">
+              Add to Cart 
             </button>
           </div>
           <div onClick={handleVideoShow} className="btn w-full">

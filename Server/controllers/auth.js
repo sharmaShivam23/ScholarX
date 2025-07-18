@@ -14,6 +14,10 @@ exports.sendOTP = async(req,res) => {
   try{
   const {email} = req.body
 
+   if (typeof email !== 'string') {
+  return res.status(400).json({ message: "Invalid email  type" });
+}
+
   const existUser= await user.findOne({email})
   if(existUser){
    return res.status(401).json({
@@ -66,6 +70,27 @@ exports.signUp = async(req,res) => {
   try{
   
     const {firstName , lastName , email , password ,confirmpassword, accountType , otp} = req.body
+     
+     if (
+  typeof firstName !== 'string' ||
+  typeof lastName !== 'string' ||
+  typeof email !== 'string' ||
+  typeof password !== 'string' ||
+  typeof confirmpassword !== 'string' ||
+  typeof accountType !== 'string' ||
+  typeof otp !== 'string' ||
+  !firstName.trim() ||
+  !lastName.trim() ||
+  !email.trim() ||
+  !password.trim() ||
+  !confirmpassword.trim() ||
+  !accountType.trim() ||
+  !otp.trim()
+) {
+  return res.status(400).json({ message: "All fields must be valid non-empty strings" });
+}
+
+
     if(!firstName || !lastName || !email || !password){
      return res.status(403).json({
         success : false,
@@ -145,12 +170,19 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    
+    if (typeof email !== 'string' || typeof password !== 'string') {
+  return res.status(400).json({ message: "Invalid email or password type" });
+}
+
     if (!email || !password) {
       return res.status(400).json({
         success: false,
         message: "All details are required",
       });
     }
+
+    
 
     const existEmail = await user.findOne({ email })
     if (!existEmail) {
@@ -160,6 +192,8 @@ exports.login = async (req, res) => {
       });
     }
 
+    
+
     const checkPassword = await bcrypt.compare(password, existEmail.password);
     if (!checkPassword) {
       return res.status(400).json({
@@ -167,6 +201,7 @@ exports.login = async (req, res) => {
         message: "Invalid password",
       });
     }
+
 
     // Password correct — create JWT
     const payload = {
@@ -226,6 +261,22 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const { email, newpassword, confirmNewpassword } = req.body;
+     
+    if (
+  typeof email !== 'string' ||
+  typeof newpassword !== 'string' ||
+  typeof confirmNewpassword !== 'string' ||
+  !email.trim() ||
+  !newpassword.trim() ||
+  !confirmNewpassword.trim()
+) {
+  return res.status(400).json({
+    success: false,
+    message: "All fields are required and must be valid non-empty strings",
+  });
+}
+
+
 
     if (!email || !newpassword || !confirmNewpassword) {
       return res.status(400).json({

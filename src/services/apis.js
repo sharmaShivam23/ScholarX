@@ -92,3 +92,9 @@ export const getInstructorCourses = (userId) => ({
 export const getEachCourse = (courseId) => ({
   GET_COURSE_API: `${BASE_URL}/Course/${courseId}`
 })
+
+
+export const ChatbotApi = {
+  CHATBOT_API: `${BASE_URL}/Chatbot`
+}
+

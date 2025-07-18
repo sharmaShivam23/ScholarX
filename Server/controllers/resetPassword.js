@@ -10,6 +10,16 @@ exports.resetPasswordToken = async (req, res) => {
   try {
     const { email } = req.body;
 
+    if (
+  typeof email !== 'string'
+) {
+  return res.status(400).json({
+    success: false,
+    message: "Invalid Email type",
+  });
+}
+
+
     if (!email) {
       return res.status(400).json({
         success: false,
@@ -64,6 +74,23 @@ exports.resetPasswordToken = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { password, confirmPassword, token } = req.body;
+
+    if (
+  typeof password !== 'string' ||
+  typeof confirmPassword !== 'string' ||
+  typeof token !== 'string' ||
+  !password.trim() ||
+  !confirmPassword.trim() ||
+  !token.trim()
+) {
+  return res.status(400).json({
+    success: false,
+    message: "All fields are required and must be valid non-empty strings",
+  });
+}
+
+
+
 
     if(!password){
        return res.status(400).json({

@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const rateLimit = require('express-rate-limit');
 const {auth , isAdmin , isInstructor , isStudent} = require('../middlewares/Auth')
+const {Chatbot} = require("../controllers/Chatbot")
 
 // Auth Controllers
 const { sendOTP, signUp, login, changePassword } = require('../controllers/auth');
@@ -70,6 +71,7 @@ router.post('/send-otp', limiter ,  sendOTP);
 router.post('/signup', Signuplimiter ,  signUp);
 router.post('/login' ,  login);
 router.post('/change-password', changePassword);
+router.post('/Chatbot', Chatbot);
 
 // Category Routes*
 // router.post('/create-category', createCategory);
@@ -89,7 +91,7 @@ router.delete("/deleteCourse", deleteCourse);
 
 
 // Profile Routes*
-router.put('/profile', profile);
+router.put('/profile', auth ,  profile);
 router.post('/userdetails', getAllUserDetails);
 router.delete('/delete-profile/:id', delteProfile); 
 router.put('/updateImage/:id', uploadProfileImage); 
