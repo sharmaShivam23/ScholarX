@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setCartItems } from "../../slices/cartSlice";
 import { setTotalItems } from "../../slices/cartSlice";
 import toast from "react-hot-toast";
-import randomimg from "../../assets/images/randomimg.jpg";
+import randomimg from "../../assets/images/Randomimg.jpg";
 
 const EachCourse = () => {
   const rating = (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
