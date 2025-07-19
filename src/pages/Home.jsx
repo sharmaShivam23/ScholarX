@@ -89,7 +89,7 @@ const Home = () => {
         <h3 className="text-lg mt-2 text-[#838894] font-[500]">
           Learn to bulid anything you want
         </h3>
-        <ExploreMore />
+        <ExploreMore className="-z-10" />
 
         <div className="img relative  z-10">
           <img src={homebg2} className=" h-[50vh] bg-red-400 z-10" alt="" />

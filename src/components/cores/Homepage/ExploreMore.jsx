@@ -31,7 +31,7 @@ const ExploreMore = () => {
   
   return (
     <>
-    <div className='flex justify-center items-center'>
+    <div className='flex  justify-center items-center'>
       <div className={`head mt-10 max-[400px]:hidden flex justify-center  sm:gap-7  lg:gap-10 gap-3 px-10  bg-[#161D29] p-3 max-w-max  rounded-4xl  items-center`}>
         {tabs.map((element , index) => (
            <div key={index} className={`all   text-white ${currentTab == element ? "bg-[#000814] px-7 py-2 rounded-3xl" : ""} cursor-pointer   text-xs sm:text-lg font-[500]`}

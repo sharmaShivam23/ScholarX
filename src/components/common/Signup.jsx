@@ -131,7 +131,7 @@ const Signup = () => {
         </p>
         <div className="head2 font-sans text-xl text-[#AFB2BF]  mt-6">
           Build skills for today, tomorrow, and beyond.{" "}
-          <HighlightText text="Education to future-proof your career." />
+          <HighlightText allow={true} text="Education to future-proof your career." />
         </div>
 
         <div className="role text-[#AFB2BF] sm:w-[18vw]  h-[60px] bg-[#161D29] rounded-4xl mt-10 text-xl flex justify-center items-center gap-12">

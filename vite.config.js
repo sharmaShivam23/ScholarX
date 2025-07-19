@@ -42,7 +42,8 @@ export default defineConfig({
     tailwindcss(),
     visualizer({
       filename: './dist/bundle-report.html',
-      open: !isVercel, // ✅ Only open locally, not on Vercel
+      open: !isVercel, 
+      
       gzipSize: true,
       brotliSize: true,
     }),

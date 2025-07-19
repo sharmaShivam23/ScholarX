@@ -29,7 +29,7 @@ const ScrollToTop = () => {
     isVisible && (
       <div
         onClick={scrollToTop}
-        className="fixed bottom-7 right-7 z-50 p-3 rounded-full text-white transition-all bg-[#161D30] border-2 border-white cursor-pointer hover:bg-yellow-600"
+        className="fixed bottom-6 right-5 z-50 p-3 rounded-full text-white transition-all bg-[#161D30] border-2 border-white cursor-pointer hover:bg-yellow-600"
         title="Scroll to top"
       >
         <FaArrowUpFromBracket className="text-xl" />

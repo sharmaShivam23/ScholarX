@@ -12,6 +12,20 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [position , setPosition] = useState(false)
+
+    useEffect(() => {
+       const handleScroll = () => {
+         if (window.scrollY > 200) {
+           setPosition(true);
+         } else {
+           setPosition(false);
+         }
+       };
+   
+       window.addEventListener("scroll", handleScroll);
+       return () => window.removeEventListener("scroll", handleScroll);
+     }, []);
 
   const messagesEndRef = useRef(null);
 
@@ -58,7 +72,7 @@ const ChatBot = () => {
       <button
         onClick={toggleChat}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
-        className={`fixed bottom-10 border-2 ease-in-out duration-700 border-white left-7 z-50 p-3 rounded-full text-white s transition-all
+        className={`fixed ${position ? "right-[80px]" : "right-5"} bottom-6 border-2 ease-in-out duration-700 border-white  z-50 p-3 rounded-full text-white s transition-all
           bg-[#161D30]
           
         `}
@@ -72,7 +86,7 @@ const ChatBot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-28 left-4 z-50 w-80 max-w-[90vw] h-[500px] flex flex-col bg-gray-900 border border-white rounded-xl shadow-xl overflow-hidden">
+        <div className={`fixed bottom-28  transition-all ease-in-out duration-700 ${position ? "right-[80px]" : "right-5"}  z-50 w-80 max-w-[90vw] h-[500px] flex flex-col bg-gray-900 border border-white rounded-xl shadow-xl overflow-hidden`}>
           <div className="bg-[#161D30] border-b-1 border-white  text-white text-center py-3 rounded-t-xl font-semibold text-lg">
             🤖 ScholarX AI
           </div>
@@ -81,7 +95,7 @@ const ChatBot = () => {
 
           </div> */}
           {/* Pointer below chatbox */}
-<div className="fixed bottom-[103px] left-10 w-7 h-7 bg-gray-800 rotate-45 border-r border-b border-white -z-10" />
+<div className={`fixed bottom-[103px]  transition-all ease-in-out duration-700  ${position ? "right-[100px]" : "right-10"}   w-7 h-7 bg-gray-800 rotate-45 border-r border-b border-white -z-10`} />
 
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#000814]">

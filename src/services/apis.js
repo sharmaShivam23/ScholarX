@@ -98,3 +98,7 @@ export const ChatbotApi = {
   CHATBOT_API: `${BASE_URL}/Chatbot`
 }
 
+export const ContactApi = {
+  CONTACT_API: `${BASE_URL}/Contact`
+}
+

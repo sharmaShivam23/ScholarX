@@ -9,6 +9,8 @@ const {Chatbot} = require("../controllers/Chatbot")
 // Auth Controllers
 const { sendOTP, signUp, login, changePassword } = require('../controllers/auth');
 
+const {submitContactForm} = require("../controllers/Contact")
+
 // Category Controllers
 const { createCategory, showAllCategory , getCourseDeatils } = require('../controllers/categorys');
 
@@ -72,6 +74,7 @@ router.post('/signup', Signuplimiter ,  signUp);
 router.post('/login' ,  login);
 router.post('/change-password', changePassword);
 router.post('/Chatbot', Chatbot);
+router.post('/Contact', submitContactForm);
 
 // Category Routes*
 // router.post('/create-category', createCategory);

@@ -8,6 +8,10 @@ import { AboutData } from "../components/Data/AboutData";
 import { AboutData2 } from "../components/Data/Aboutdata2";
 import YellowArrowBtn from "../components/cores/Homepage/YellowArrowBtn";
 import Contact from "../components/core/Contact";
+import about1 from "../assets/AboutUsImages/about1.svg"
+import about2 from "../assets/AboutUsImages/about2.svg"
+import about3 from "../assets/AboutUsImages/about3.svg"
+import { RiDoubleQuotesL } from "react-icons/ri";
 const Aboutus = () => {
   return (
     <div className="bg-[#000814]  text-white">
@@ -26,13 +30,13 @@ export default Aboutus;
 const FirstPage = () => {
   const images = [
     {
-      img: Women,
+      img: about1,
     },
     {
-      img: Women,
+      img: about2,
     },
     {
-      img: Women,
+      img: about3,
     },
   ];
 
@@ -54,6 +58,7 @@ const FirstPage = () => {
           <HighlightText text="Brighter Future" />
         </div>
         <div className="content text-[#838894] sm:text-lg text-xs font-[550] sm:max-w-[50vw] mt-2">
+          {/* <RiDoubleQuotesL/> */}
           Studynotion is at the forefront of driving innovation in online
           education. We're passionate about creating a brighter future by
           offering cutting-edge courses, leveraging emerging technologies, and
@@ -71,17 +76,40 @@ const FirstPage = () => {
             />
           ))}
         </div>
-        <div className="flex justify-start">
-          <div className="txt2 font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-start">
+        <div className="flex justify-start sm:justify-center">
+          <div className="txt2  font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-start">
             We are passionate about revolutionizing the way we learn. Our
-            innovative platform <HighlightText text="combines technology" />,
-            <span className="text-[#FF512F]">expertise</span> , and community to
+            innovative platform <HighlightText text="combines technology" /> ,
+            <span className="text-[#FF512F]"> expertise </span> , and community to
             create an{" "}
             <span className="text-[#F9D423]">
-              unparalleled educational experience.
+              unparalleled educational experience. 
             </span>
+              {/* <RiDoubleQuotesL className="rotate-180"/> */}
           </div>
         </div>
+
+        
+
+{/* 
+<div className="flex justify-start bg-red-500 max-w-max sm:justify-center">
+  <div className="txt2 font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-start relative">
+    <div className="flex items-start">
+      <RiDoubleQuotesL size={90} className=" text-[#FF512F] relative bottom-10 mr-2" />
+      <p>
+        We are passionate about revolutionizing the way we learn. Our
+        innovative platform <HighlightText text="combines technology" />, 
+        <span className="text-[#FF512F]"> expertise </span>, and community to
+        create an{" "}
+        <span className="text-[#F9D423]">
+          unparalleled educational experience.
+        </span>
+      </p>
+      <RiDoubleQuotesL size={90} className="rotate-180 mt-10 text-[#FF512F] relative right-8" />
+    </div>
+  </div>
+</div> */}
+
       </div>
     </>
   );

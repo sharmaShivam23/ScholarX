@@ -124,6 +124,7 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import Chatbot from "./pages/Chatbot";
 import ScrollToTop from "./pages/ScrollToTop";
+import Contact from "./pages/Contact";
 
 //  Lazy load all route components
 const Home = React.lazy(() => import("./pages/Home"));
@@ -179,6 +180,8 @@ function App() {
             path="/updatepassword/:updatepasswordToken"
             element={<UpdatePassword />}
           />
+
+          <Route path="/contact" element={<Contact/>}/>
 
           {/*  Dashboard Routes */}
           <Route

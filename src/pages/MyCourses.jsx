@@ -76,28 +76,22 @@ const MyCourses = () => {
             courses.map((courseDetail, index) => (
               <div
                 key={index}
-                className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-6 border border-[#999DAA] border-t-0 p-4 sm:p-6 rounded-md bg-[#1C1F26]"
+                className="flex flex-col sm:flex-row justify-between  gap-4 sm:gap-6 border border-[#999DAA] border-t-0 p-4 sm:p-6 rounded-md bg-[#1C1F26]"
               >
                 {/* Left Side - Image + Info */}
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                  {/* Thumbnail */}
-                  <div className="relative w-full sm:w-[250px] aspect-video rounded-md overflow-hidden bg-green-50">
-                    {/* <img
-                      src={courseDetail?.thumbnail}
-                      className="absolute w-full h-full object-cover"
-                      alt="Course Thumbnail"
-                    /> */}
-                    <div
-  className="w-[250px] aspect-video rounded-sm bg-center bg-cover bg-no-repeat"
-  style={{ backgroundImage: `url(${courseDetail?.thumbnail})` }}
-></div>
+                 
+                    <img
+      src={courseDetail?.thumbnail}
+      alt={courseDetail?.courseName}
+      className="h-40 sm:h-40 w-full sm:w-56 rounded-md object-cover"
+    />
 
-                  </div>
 
                   {/* Details */}
-                  <div className="text-white font-medium text-sm sm:text-base space-y-2">
+                  <div className="text-white  font-medium text-sm sm:text-base space-y-2">
                     <div>{courseDetail?.courseName}</div>
-                    <div className="text-[#BBBBBB]">{courseDetail?.whatYouWillLearn}</div>
+                    <div className="text-[#BBBBBB] ">{courseDetail?.whatYouWillLearn}</div>
                     <div>Created: {new Date(courseDetail?.createdAt).toLocaleString()}</div>
                     <div
                       className={`flex items-center gap-2 text-xs font-bold px-3 py-1 w-max rounded-xl ${

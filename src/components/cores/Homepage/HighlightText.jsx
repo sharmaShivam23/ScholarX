@@ -1,8 +1,8 @@
 import React from 'react'
 
-const HighlightText = ({text}) => {
+const HighlightText = ({text , allow}) => {
   return (
-    <span className='text-cyan-400'>
+    <span className={`text-cyan-400 ${allow ? "italic" : ""} `}>
       {text}
     </span>
   )
