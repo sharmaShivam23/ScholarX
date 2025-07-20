@@ -11,3 +11,17 @@ body{
   z-index: 50;
   width : 100%
 } */
+
+input::-ms-reveal {
+  display: none;
+}
+input::-ms-clear {
+  display: none;
+}
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}

@@ -35,10 +35,7 @@ const CourseForm1 = () => {
     whatYouWillLearn: [],
   });
 
-    useEffect(() => {
-      console.log("c",Course);
-      
-    } , [Course]);
+    
 
 
   const handleBenefitChange = (e) => {
@@ -58,7 +55,7 @@ const CourseForm1 = () => {
   }, [user]);
 
   const handleKeyDown = (e) => {
-    console.log(e.key);
+    // console.log(e.key);
 
     if (e.key === "Enter") {
       e.preventDefault();
@@ -74,7 +71,7 @@ const CourseForm1 = () => {
       ...prev,
       whatYouWillLearn: [...prev.whatYouWillLearn, benefitInput.trim()],
     }));
-    setBenefitInput(""); // clear input
+    setBenefitInput(""); 
   };
 
   const handleRemove = (itemToRemove) => {
@@ -96,8 +93,8 @@ const CourseForm1 = () => {
     const fetchCategories = async () => {
       try {
         const response = await apiConnect("GET", categories.CATEGORIES_API);
-        console.log("cat", response.data.response);
-        setCategoryData(response.data.response);
+        // console.log("cat", response.data.response);
+        setCategoryData(response?.data?.response);
          
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -112,7 +109,7 @@ const CourseForm1 = () => {
     if(!Valid()) {
       return
     }
-    console.log(formData);
+    // console.log(formData);
      const toastId = toast.loading("Creating Course...");
 
     try {
@@ -124,8 +121,8 @@ const CourseForm1 = () => {
       data.append("tag", formData.tag);
       data.append("whatYouWillLearn", formData.whatYouWillLearn);
       data.append("thumbnail", formData.thumbnail);
-      console.log("io", CreateCourse.CREATECOURSE_API);
-      console.log(token);
+      // console.log("io", CreateCourse.CREATECOURSE_API);
+      // console.log(token);
 
       const response = await apiConnect(
         "POST",
@@ -137,8 +134,8 @@ const CourseForm1 = () => {
           },
         }
       );
-      console.log(response);
-      console.log("i",token);
+      // console.log(response);
+      // console.log("i",token);
       
       
       toast.success(response?.data?.message, {id : toastId})
@@ -146,10 +143,10 @@ const CourseForm1 = () => {
         dispatch(setState(2))
        dispatch(setCourseId(response?.data?.data?._id))
        dispatch(setCourse(response?.data?.data))
-       console.log("Course ID set in Redux:", response?.data?.data._id);
+      //  console.log("Course ID set in Redux:", response?.data?.data._id);
         ClearFields()
       }
-      console.log(response);
+      // console.log(response);
     } catch (Err) {
   console.error("API Error:", Err);
   const errorMessage =

@@ -19,12 +19,12 @@ const ContactUsForm = () => {
 
     try {
       const res = await apiConnect("POST", ContactApi.CONTACT_API, data);
-      console.log(res);
+      // console.log(res);
       if (res?.data?.success == true) {
         toast.success("Message sent successfully");
       }
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error);
+      // console.log("ERROR MESSAGE - ", error);
       toast.error(error?.response?.data?.message);
     }
     finally{

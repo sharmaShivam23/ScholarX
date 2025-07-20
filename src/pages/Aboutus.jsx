@@ -91,24 +91,6 @@ const FirstPage = () => {
 
         
 
-{/* 
-<div className="flex justify-start bg-red-500 max-w-max sm:justify-center">
-  <div className="txt2 font-[600] text-xl sm:text-3xl mt-20 p-10 sm:max-w-[60vw] text-start relative">
-    <div className="flex items-start">
-      <RiDoubleQuotesL size={90} className=" text-[#FF512F] relative bottom-10 mr-2" />
-      <p>
-        We are passionate about revolutionizing the way we learn. Our
-        innovative platform <HighlightText text="combines technology" />, 
-        <span className="text-[#FF512F]"> expertise </span>, and community to
-        create an{" "}
-        <span className="text-[#F9D423]">
-          unparalleled educational experience.
-        </span>
-      </p>
-      <RiDoubleQuotesL size={90} className="rotate-180 mt-10 text-[#FF512F] relative right-8" />
-    </div>
-  </div>
-</div> */}
 
       </div>
     </>

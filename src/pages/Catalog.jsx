@@ -15,10 +15,6 @@ const Catalog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("course", courses);
-  }, [CategoryId]);
-
-  useEffect(() => {
     const fetchCourses = async () => {
       const toastId = toast.loading("Loading courses...");
 
@@ -31,10 +27,9 @@ const Catalog = () => {
           }
         );
 
-        console.log(response);
+        // console.log(response);
 
         if (response?.data?.success) {
-          // setCourses(response?.data?.response?.course || []);
           const allCourses = response?.data?.response?.course || [];
           const publishedCourses = allCourses.filter(
             (course) => course.status === "Published"
@@ -44,7 +39,6 @@ const Catalog = () => {
           setname(response?.data?.response?.name);
           setdes(response?.data?.response?.description);
           toast.success("Courses loaded", { id: toastId });
-          // navigate(`/catalog/${coursePath}`)
         } else {
           toast.error(response?.data?.message || "Failed to fetch courses", {
             id: toastId,
@@ -61,10 +55,6 @@ const Catalog = () => {
     }
   }, [CategoryId]);
 
-  useEffect(() => {
-    console.log("c", CategoryId);
-    console.log(courses);
-  }, [CategoryId]);
 
   return (
     <div className="mt-16 text-[#999DAA] w-full min-h-screen">

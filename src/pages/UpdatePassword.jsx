@@ -12,9 +12,8 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-
 const UpdatePassword = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { updatepasswordToken: token } = useParams();
   const [formData, setFormData] = React.useState({
     password: "",
@@ -23,9 +22,8 @@ const UpdatePassword = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
-//  const { token } = useSelector((state) => state.auth);
- console.log("t" , token);
- 
+  //  const { token } = useSelector((state) => state.auth);
+  // console.log("t", token);
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -34,26 +32,30 @@ const UpdatePassword = () => {
 
   async function handleForm(e) {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
+
     const toastId = toast.loading("Resetting your password...");
 
+    try {
+      const response = await apiConnect("POST", resetpassword.RESETPASS_API, {
+        ...formData,
+        token,
+      });
 
-     try {
-    const response = await apiConnect('POST' , resetpassword.RESETPASS_API , {...formData , token})
-
-    if (response.data.success) {
-      toast.success("Password reset successfully", { id: toastId });
-      navigate("/login")
-    } else {
-      toast.error(response.data.message || "Reset failed", { id: toastId });
+      if (response?.data?.success) {
+        toast.success(response.data.message || "Password reset successfully", {
+          id: toastId,
+        });
+        navigate("/login");
+      } else {
+        toast.error(response.data?.message || "Reset failed", { id: toastId });
+      }
+    } catch (err) {
+      console.error("Reset Error:", err);
+      toast.error(err?.response?.data?.message || "Something went wrong", {
+        id: toastId,
+      });
     }
-  } catch (err) {
-    console.error("Reset Error:", err);
-    toast.error(err?.response?.data?.message || "Something went wrong", {
-      id: toastId,
-    });
-  } 
-    
   }
 
   let hasLower = (password) => /[a-z]/.test(password);
@@ -77,7 +79,6 @@ const UpdatePassword = () => {
             Create Password
           </label>
 
-        
           <div className="relative">
             <input
               type={`${showPassword ? "text" : "password"}`}
@@ -88,23 +89,28 @@ const UpdatePassword = () => {
               placeholder="Enter Password"
               className="h-[60px] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
             />
-          
-            <span onClick={() => setShowPassword((prev) => !prev)} className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer">
-             {showPassword ?  <FaEye  className="text-xl"/> : <FaEyeSlash className="text-2xl"/>}
+
+            <span
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer"
+            >
+              {showPassword ? (
+                <FaEye className="text-xl" />
+              ) : (
+                <FaEyeSlash className="text-2xl" />
+              )}
             </span>
           </div>
         </div>
 
-       
-          <div className="flex justify-center flex-col w-full">
+        <div className="flex justify-center flex-col w-full">
           <label htmlFor="pass2" className="text-lg mb-1.5 font-[600]">
             Confirm Password
           </label>
 
-        
           <div className="relative">
             <input
-               type={`${showConfirmPassword ? "text" : "password"}`}
+              type={`${showConfirmPassword ? "text" : "password"}`}
               id="pass2"
               name="confirmPassword"
               value={formData.confirmPassword}
@@ -112,13 +118,19 @@ const UpdatePassword = () => {
               placeholder="Enter Password"
               className="h-[60px] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-10 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
             />
-          
-            <span onClick={() => setShowConfirmPassword((prev) => !prev)} className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer">
-             {showConfirmPassword ?  <FaEye  className="text-xl "/> : <FaEyeSlash className="text-2xl"/>}
+
+            <span
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute right-10 top-1/2 transform -translate-y-1/2 text-white cursor-pointer"
+            >
+              {showConfirmPassword ? (
+                <FaEye className="text-xl " />
+              ) : (
+                <FaEyeSlash className="text-2xl" />
+              )}
             </span>
           </div>
         </div>
-
 
         <div className="flex justify-center w-full sm:w-[35vw] flex-wrap items-center gap-2">
           {validation.map((item, index) => {

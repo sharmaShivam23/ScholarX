@@ -25,7 +25,7 @@ const CarouselCourses = ({ id, courses }) => {
         getEachCourse(id).GET_COURSE_API
       );
 
-      console.log(response);
+      // console.log(response);
       
 
       if (response?.data?.success) {

@@ -24,17 +24,3 @@ const Contact = () => {
 
 export default Contact
 
-
-// import React from 'react'
-
-// const Contact = () => {
-//   return (
-//     <div className='h-screen w-full bg-red-500'> 
-
-//       helooo
-      
-//     </div>
-//   )
-// }
-
-// export default Contact

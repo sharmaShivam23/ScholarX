@@ -25,13 +25,13 @@ const SubSection = ({nextPage , setNextPage}) => {
     sectionId: SectionId,
   });
 
-  useEffect(() => {
-    console.log("x", TotalSubSections);
-  }, []);
+  // useEffect(() => {
+  //   console.log("x", TotalSubSections);
+  // }, []);
 
    useEffect(() => {
     if (SectionId) {
-      console.log("Section ID is set:", SectionId);
+      // console.log("Section ID is set:", SectionId);
       setFormData(prev => ({ ...prev, SectionId }));
     }
   }, [SectionId]);
@@ -68,7 +68,7 @@ const SubSection = ({nextPage , setNextPage}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     const form = new FormData();
     form.append("video", formData.video);
     form.append("title", formData.title);
@@ -88,7 +88,7 @@ const SubSection = ({nextPage , setNextPage}) => {
         SubSectionName.CREATE_SUB_SECTION_API,
         form
       );
-      console.log(response);
+      // console.log(response);
       if (response?.data?.success === true) {
         dispatch(setSubSectionToggle(false));
         toast.success(response?.data?.message, { id: toastId });
@@ -107,7 +107,7 @@ dispatch(setTotalSubSections({
   }));
       }
     } catch (Error) {
-      console.log(Error);
+      // console.log(Error);
       toast.error(Error?.response?.data?.message, { id: toastId });
     }
   };

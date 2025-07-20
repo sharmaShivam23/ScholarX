@@ -41,9 +41,7 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
-      // const response = await axios.post('http://localhost:3000/scholarX/Chatbot', {
-      //   question: trimmedQuestion,
-      // });
+     
       const response = await  apiConnect("POST" , ChatbotApi.CHATBOT_API , {question: trimmedQuestion})
 
       const botReply = response.data.answer?.trim() || 'No response';
@@ -51,7 +49,7 @@ const ChatBot = () => {
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error(error);
-      const errorMessage = { text: 'Something went wrong 😢', sender: 'bot' };
+      const errorMessage = { text: 'Something went wrong ', sender: 'bot' };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setLoading(false);
@@ -86,7 +84,7 @@ const ChatBot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className={`fixed bottom-28  transition-all ease-in-out duration-700 ${position ? "right-[80px]" : "right-5"}  z-50 w-80 max-w-[90vw] h-[500px] flex flex-col bg-gray-900 border border-white rounded-xl shadow-xl overflow-hidden`}>
+        <div className={`fixed bottom-28  transition-all ease-in-out duration-700 ${position ? "right-[40px]" : "right-5"}  z-50 w-80 max-w-[90vw] h-[500px] flex flex-col bg-gray-900 border border-white rounded-xl shadow-xl overflow-hidden`}>
           <div className="bg-[#161D30] border-b-1 border-white  text-white text-center py-3 rounded-t-xl font-semibold text-lg">
             🤖 ScholarX AI
           </div>

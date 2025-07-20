@@ -23,12 +23,11 @@ import { useNavigate } from "react-router-dom";
 import { setLoading } from "../../slices/authSlice";
 import toast from "react-hot-toast";
 
-
 const UpdateProfile = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
   const id = user?._id;
-  const {token} = useSelector((state) => state.auth)
+  const { token } = useSelector((state) => state.auth);
   const { profileImage } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -40,18 +39,15 @@ const UpdateProfile = () => {
     about: "",
     id,
   });
-  const [passdata , setpassdata] = useState({
-    currentPassword : "",
-    newPassword : "",
-    id : id
-  })
+  const [passdata, setpassdata] = useState({
+    currentPassword: "",
+    newPassword: "",
+    id: id,
+  });
   const [fileName, setFileName] = useState("Select");
   const [formData, setFormData] = useState({
     image: null,
   });
-
- 
-
 
   const handleFileChange = (e) => {
     setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
@@ -62,12 +58,11 @@ const UpdateProfile = () => {
   };
 
   const handleProfileImage = async () => {
-    dispatch(setLoading(true))
-    console.log(formData);
-    
-    const toastId =  toast.loading("Loading wait....")
-    try {
+    dispatch(setLoading(true));
+    // console.log(formData);
 
+    const toastId = toast.loading("Loading wait....");
+    try {
       const endpoint = updateProfileImage(id).UPDATEIMAGE_API;
       const response = await axios.put(endpoint, formData, {
         headers: {
@@ -76,13 +71,12 @@ const UpdateProfile = () => {
         },
       });
       dispatch(setProfileImage(response.data.updatedImage));
-      toast.success(response.data.message , {id : toastId})
-      // localStorage.setItem("profileImage", response.data.updatedImage);
-      console.log(response);
+      toast.success(response.data.message, { id: toastId });
+      // console.log(response);
     } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message , {id : toastId})
-      dispatch(setLoading(false))
+      // console.log(err);
+      toast.error(err.response.data.message, { id: toastId });
+      dispatch(setLoading(false));
     }
   };
 
@@ -92,111 +86,104 @@ const UpdateProfile = () => {
   }
 
   const handleUpdateUser = async () => {
-    dispatch(setLoading(true))
-    const toastId =  toast.loading("Submitting data...")
-    console.log(passdata);
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Submitting data...");
+
     try {
       const res = await apiConnect("PUT", updateUser.UPDATEUSER_API, form);
-      console.log(res);
-      dispatch(setUser(res.data.user));
-      toast.success(res.data?.message , {id : toastId})
-      if(res.data.success == true){
-        clearFields()
+      // console.log(res);
+
+      dispatch(setUser(res?.data?.user));
+      toast.success(res?.data?.message || "User updated successfully", {
+        id: toastId,
+      });
+
+      if (res?.data?.success) {
+        clearFields();
       }
-      // localStorage.setItem("user", res.data.user);
     } catch (err) {
-      console.log(err);
-      toast.error(err?.response?.data?.message , {id : toastId})
-     
-    }
-    finally{
-      dispatch(setLoading(false))
+      // console.error(err);
+      const errorMsg =
+        err?.response?.data?.message || "Update failed. Please try again.";
+      toast.error(errorMsg, { id: toastId });
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
-  function handlepassChange(e){
+  function handlepassChange(e) {
     const { name, value } = e.target;
     setpassdata((prev) => ({ ...prev, [name]: value }));
   }
 
-    async function handleForm(e) {
-      e.preventDefault();
-      console.log(passdata);
-      dispatch(setLoading(true))
-      const toastId = toast.loading("Password Updating....")
-  
-      try{
-      const response = await apiConnect('PUT' , updatePassword.NEWPASS_API ,passdata)
-      toast.success(response.data?.message , {id : toastId})
-      console.log(response);
-      clearFields()
-      
-      } catch(Err){
-        console.log(Err);
-        if(Err?.response?.data?.message){
-        toast.error(Err?.response?.data?.message , {id : toastId})
-        } else {
-          toast.error("Something went wrong")
-        }
+  async function handleForm(e) {
+    e.preventDefault();
+    // console.log(passdata);
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Password Updating....");
+
+    try {
+      const response = await apiConnect(
+        "PUT",
+        updatePassword.NEWPASS_API,
+        passdata
+      );
+      toast.success(response?.data?.message, { id: toastId });
+      // console.log(response);
+      clearFields();
+    } catch (Err) {
+      // console.log(Err);
+      if (Err?.response?.data?.message) {
+        toast.error(Err?.response?.data?.message, { id: toastId });
+      } else {
+        toast.error("Something went wrong");
       }
-      finally{
-        dispatch(setLoading(false))
-      }
-      
+    } finally {
+      dispatch(setLoading(false));
     }
+  }
 
+  async function handleDelete() {
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Deleting Account...");
+    try {
+      const endPoint = deleteProfile(id).DELPROFILE_API;
+      const response = await apiConnect("DELETE", endPoint);
+      toast.success(response?.data?.message, { id: toastId });
+      navigate("/login");
+      dispatch(logout());
 
-
-
-   async function handleDelete(){
-    dispatch(setLoading(true))
-    const toastId =  toast.loading("Deleting Account...")
-    try{
-      const endPoint = deleteProfile(id).DELPROFILE_API
-     const response = await apiConnect("DELETE",endPoint)
-     toast.success(response?.data?.message , {id : toastId})
-     navigate("/login")
-     dispatch(logout())
-     
-     console.log(response);
-     
+      //  console.log(response);
+    } catch (Err) {
+      // console.log(Err);
+      toast.Err(Err?.response?.data?.message, { id: toastId });
+    } finally {
+      dispatch(setLoading(false));
     }
-    catch(Err){
-      console.log(Err);
-      toast.Err(Err?.response?.data?.message , {id : toastId})
-    }
-    finally{
-      dispatch(setLoading(false))
-    }
-    }
-   
-    function  clearFields(){
-      setForm({
-        firstName: "",
-        lastName: "",
-        dob: "",
-        about: "",
-        gender: "",
-        phoneNumber: ""
-      });
-      setpassdata({
-        currentPassword : "",
-        newPassword : "",
-      })
-    }
+  }
 
-
-
-  
-
+  function clearFields() {
+    setForm({
+      firstName: "",
+      lastName: "",
+      dob: "",
+      about: "",
+      gender: "",
+      phoneNumber: "",
+    });
+    setpassdata({
+      currentPassword: "",
+      newPassword: "",
+    });
+  }
 
   return (
     // <div className="p flr items-end">
     <>
       {/* <Sidebar/> */}
-      <div className="mt-16 p-10 pb-16 overflow-x-hidden ml-auto bg-[#000814] h-auto">
-        <div className="p2 w-full md:max-w-[85vw] ml-auto">
-          <div className="p3 relative max-w-[90vw]  sm:max-w-[65vw] m-auto ">
+      <div className="mt-16  p-10 pb-16 overflow-x-hidden ml-auto bg-[#000814] h-auto">
+        <div className="p2 max-w-[100vw] mx-auto md:max-w-[85vw] md:ml-auto">
+          <div className="p3 relative w-full  sm:max-w-[65vw] m-auto ">
             <h1 className="p-3 text-4xl font-[600] text-white ">
               Edit Profile
             </h1>
@@ -228,7 +215,11 @@ const UpdateProfile = () => {
                           htmlFor="fileInput"
                           className="h-[48px]   w-auto px-5 bg-[#161D29] text-white font-semibold flex justify-center items-center  shadow-[0px_1px_2px_rgba(255,255,255,0.6)] cursor-pointer hover:bg-[#1f2738] rounded-md transition-all duration-300"
                         >
-                          <span className="mr-2 text-md">{fileName}</span>
+                          <span className="mr-2 text-xs">
+                            {fileName.length > 10
+                              ? fileName.slice(0, 10) + "..."
+                              : fileName}
+                          </span>
 
                           {fileName == "Select" ? (
                             <div className="text-xl text-violet-800">
@@ -311,7 +302,6 @@ const UpdateProfile = () => {
                     </div>
                   </div>
 
-                  
                   <div className="Gender mt-5.5">
                     <div className="flex flex-col gap-2">
                       <label htmlFor="gender" className="text-lg font-[600]">
@@ -467,7 +457,10 @@ const UpdateProfile = () => {
                     contains Paid Courses. Deleting your account will remove all
                     the <br /> contain associated with it.
                   </p>
-                  <p onClick={handleDelete} className="red mt-2 cursor-pointer text-lg italic text-[#D43D63]">
+                  <p
+                    onClick={handleDelete}
+                    className="red mt-2 cursor-pointer text-lg italic text-[#D43D63]"
+                  >
                     I want to delete my account.
                   </p>
                 </div>

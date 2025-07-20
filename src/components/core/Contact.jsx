@@ -25,7 +25,7 @@ const Contact = () => {
 
   const onSubmit = (data) => {
     setLoading(true);
-    console.log("Form submitted:", data);
+    // console.log("Form submitted:", data);
     // simulate sending...
     setTimeout(() => {
       setLoading(false);

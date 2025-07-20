@@ -40,7 +40,7 @@ const CourseForm3 = () => {
         console.warn("Course status updated, but no course data returned.");
       }
     } catch (err) {
-      console.error("Error updating course status:", err);
+      // console.error("Error updating course status:", err);
       toast.error(err?.response?.data?.message || "Error updating status", {
         id: toastId,
       });

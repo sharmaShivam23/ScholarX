@@ -17,40 +17,42 @@ const ForgotPassword = ({setupdatepasswordToken}) => {
   
 
   const { updatepasswordToken } = useParams();
-  console.log("Reset Token:", updatepasswordToken);
+  // console.log("Reset Token:", updatepasswordToken);
 
 
 
+async function handleForm(e) {
+  e.preventDefault();
+  dispatch(setLoading(true));
 
- async function handleForm(e){
-   e.preventDefault()
-    console.log(email);
-     dispatch(setLoading(true))
-    const toastId= toast.loading("Sending reset link...")
-    try{
+  const toastId = toast.loading("Sending reset link...");
 
-      const response = await apiConnect("POST" , forgotpassword.FORGOTPASS_API , {email})
-      console.log(response);
-     
-      if(response.data.success === true){
-        toast.success(response?.data?.message, { id: toastId });
-        setupdatepasswordToken(response.data.token)
-        setEmailSent(true)
-      }
+  try {
+    const response = await apiConnect("POST", forgotpassword.FORGOTPASS_API, { email });
+
+    if (response?.data?.success === true) {
+      toast.success(response.data.message , { id: toastId });
+      setupdatepasswordToken(response.data.token);
+      setEmailSent(true);
+    } else {
+      toast.error(response?.data?.message || "Something went wrong", { id: toastId });
     }
-    catch(err){
-      console.log(err);
-      toast.error(err?.response?.data?.message, { id: toastId });
-    }
-    finally{
-      dispatch(setLoading(false))
-    }
-    
+
+  } catch (err) {
+    console.error("Reset password error:", err);
+    toast.error(err?.response?.data?.message || "Something went wrong. Please try again.", {
+      id: toastId,
+    });
+
+  } finally {
+    dispatch(setLoading(false));
   }
+}
+
   return (
-    <div className='flex justify-center h-screen text-white bg-[#000814] gap-5 flex-col  items-center'>
+    <div className='flex justify-center  h-screen text-white bg-[#000814] gap-5 flex-col  items-center'>
      
-     <div className=" text-left">
+     <div className=" text-lef ">
      <p className='text-3xl  font-bold text-white'>
       {!emailSent ? "Reset your password" : "Check email" }
       </p>

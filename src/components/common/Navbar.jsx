@@ -32,7 +32,8 @@ const Navbar = () => {
       const result = await apiConnect("GET", categories.CATEGORIES_API);
       setSubLinks(result?.data?.response);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.response?.data?.messsage || "try again!")
     } finally {
       setLoading(false);
     }

@@ -8,17 +8,20 @@ import { FaClock, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import toast from "react-hot-toast";
+import Loading from "../components/common/Loading";
 
 const MyCourses = () => {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
   const [courses, setCourse] = useState([]);
+  const [loading , setLoading] = useState(false)
 
   const handleClick = () => {
     navigate("/dashboard/add-course");
   };
 
   const getCourses = async () => {
+    setLoading(true)
     try {
       const response = await apiConnect(
         "GET",
@@ -26,7 +29,11 @@ const MyCourses = () => {
       );
       setCourse(response?.data?.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.response?.data?.message || "failed");
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -51,6 +58,7 @@ const MyCourses = () => {
 
   return (
     <div className="w-full min-h-screen md:max-w-[85vw] border-2  ml-auto p-4 md:p-10 lg:p-20 mt-16 overflow-x-hidden">
+     
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
@@ -71,7 +79,8 @@ const MyCourses = () => {
         </div>
 
         {/* Course List */}
-        <div className="flex flex-col gap-6 mt-6">
+         {loading ? <Loading/> : (
+        <div className="flex  flex-col gap-6 mt-6">
           {courses.length > 0 ? (
             courses.map((courseDetail, index) => (
               <div
@@ -103,6 +112,7 @@ const MyCourses = () => {
                     </div>
                   </div>
                 </div>
+                
 
                 {/* Right Side - Actions */}
                 <div className="flex items-center justify-between sm:justify-end gap-6 sm:gap-10 text-white font-semibold text-base sm:text-lg">
@@ -132,9 +142,14 @@ const MyCourses = () => {
               No Course Found
             </h1>
           )}
+
+          
         </div>
+        )}
       </div>
+      
     </div>
+    
   );
 };
 

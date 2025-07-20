@@ -15,36 +15,39 @@ const OTPpage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = JSON.parse(localStorage.getItem("signupData"));
-
-  async function handleClick() {
-    if (!otp || otp.length !== 5) {
-      toast.error("Please enter a valid 5-digit OTP");
-      return;
-    }
-    dispatch(setLoading(true));
-    const toastId = toast.loading("Submitting...");
-
-    try {
-      const response = await apiConnect("POST", signUp.SIGNUP_API, {
-        ...data,
-        otp,
-      });
-
-      if (response.data.success) {
-        toast.success(response.data.message, { id: toastId });
-        navigate("/login");
-      } else {
-        toast.error(response.data.message || "Signup failed", { id: toastId });
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.message || "Signup failed", {
-        id: toastId,
-      });
-    } finally {
-      dispatch(setLoading(false));
-    }
+async function handleClick() {
+  if (!otp || otp.length !== 5) {
+    toast.error("Please enter a valid 5-digit OTP");
+    return;
   }
+
+  dispatch(setLoading(true));
+  const toastId = toast.loading("Submitting...");
+
+  try {
+    const response = await apiConnect("POST", signUp.SIGNUP_API, {
+      ...data,
+      otp,
+    });
+
+    if (response?.data?.success) {
+      toast.success(response?.data?.message, { id: toastId });
+      navigate("/login");
+    } else {
+      toast.error(response?.data?.message || "Signup failed", { id: toastId });
+    }
+
+  } catch (error) {
+    // console.error("Signup API error:", error);
+    toast.error(error?.response?.data?.message || "Something went wrong", {
+      id: toastId,
+    });
+
+  } finally {
+    dispatch(setLoading(false));
+  }
+}
+
 
   async function resendOtp() {
     const toastId = toast.loading("Resending OTP...");
@@ -58,7 +61,7 @@ const OTPpage = () => {
         toast.success(response.data.message || "OTP sent successfully", {
           id: toastId,
         });
-        console.log("Resend OTP response:", response);
+        // console.log("Resend OTP response:", response);
       } else {
         toast.error(response.data?.message || "Failed to send OTP", {
           id: toastId,

@@ -67,7 +67,7 @@ const CourseForm2 = () => {
 
   useEffect(() => {
     if (CourseId) {
-      console.log("Course ID is set:", CourseId);
+      // console.log("Course ID is set:", CourseId);
       setFormData((prev) => ({ ...prev, CourseId }));
     }
   }, [CourseId]);
@@ -76,10 +76,7 @@ const CourseForm2 = () => {
     dispatch(setSubSectionToggle(true));
   };
 
-  useEffect(() => {
-    console.log(TotalSections);
-  }, []);
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!valid()) {
@@ -93,7 +90,7 @@ const CourseForm2 = () => {
     };
 
     if (!valid(finalFormData)) return;
-    console.log(formData);
+    // console.log(formData);
     const toastId = toast.loading("Creating Section...");
 
     try {
@@ -102,20 +99,20 @@ const CourseForm2 = () => {
         SectionName.CREATE_SECTION_API,
         finalFormData
       );
-      console.log(response?.data.Section);
+      // console.log(response?.data.Section);
       const newSection = response?.data?.Section;
       dispatch(setTotalSections([...TotalSections, newSection]));
       dispatch(setSectionId(newSection._id));
-      console.log("new", newSection._id);
-      // Set SectionId in Redux
-      // dispatch(setTotalSections([...TotalSections, { sectionName: response?.data?.sectionName }]))
+      // console.log("new", newSection._id);
+     
       if (response?.data?.success === true) {
         dispatch(setSectionToggle(true));
+         toast.success(response?.data?.message, { id: toastId });
       }
-      toast.success(response?.data?.message, { id: toastId });
+     
       ClearForm();
     } catch (Err) {
-      console.log(Err);
+      // console.log(Err);
       toast.error(Err?.response?.data?.message, { id: toastId });
     }
   };
@@ -151,6 +148,7 @@ const CourseForm2 = () => {
       );
 
       if (response?.data?.success === true) {
+
         // Remove from Redux
         dispatch(
           setTotalSections(
@@ -158,9 +156,10 @@ const CourseForm2 = () => {
           )
         );
         toast.success(response?.data?.message, { id: toastId });
+        
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.response?.data?.message || "Error deleting section", {
         id: toastId,
       });
@@ -187,7 +186,7 @@ const CourseForm2 = () => {
         toast.success(response?.data?.message, { id: toastId });
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.response?.data?.message || "Error deleting section", {
         id: toastId,
       });
@@ -226,7 +225,7 @@ const CourseForm2 = () => {
           <IoIosAddCircle className="text-[#FFD60A] text-2xl" />
         </div>
 
-        {TotalSections.map(
+        {TotalSections.length > 0 &&  TotalSections.map(
           (section, index) =>
             SectionToggle && (
               <div
@@ -311,210 +310,3 @@ const CourseForm2 = () => {
 export default CourseForm2;
 
 
-
-// // Updated CourseForm2.jsx
-// import React, { useEffect, useState } from "react";
-// import { RxDropdownMenu } from "react-icons/rx";
-// import { IoIosAddCircle } from "react-icons/io";
-// import { IoAddCircleSharp } from "react-icons/io5";
-// import { RiDeleteBin5Fill } from "react-icons/ri";
-// import YellowArrowBtn from "../cores/Homepage/YellowArrowBtn";
-// import SubSection from "./SubSection";
-// import toast from "react-hot-toast";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   setSubSectionToggle,
-//   setTotalSections,
-//   setSectionToggle,
-//   setSectionId,
-//   setTotalSubSections,
-// } from "../../slices/CourseSlice";
-// import { apiConnect } from "../../services/apiconnect";
-// import { SectionName, DeleteSection, DeleteSubSection } from "../../services/apis";
-
-// const CourseForm2 = () => {
-//   const [formData, setFormData] = useState({
-//     sectionName: "",
-//     courseId: "6861145ec22defcda946e5eb",
-//   });
-
-//   const dispatch = useDispatch();
-//   const {
-//     subSectionToggle,
-//     SectionToggle,
-//     TotalSections,
-//     TotalSubSections,
-//     CourseId,
-//   } = useSelector((state) => state.Course);
-
-//   const [showSubsection, setShowSubSection] = useState(true);
-
-//   useEffect(() => {
-//     if (CourseId) {
-//       setFormData((prev) => ({ ...prev, courseId: CourseId }));
-//     }
-//   }, [CourseId]);
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   const handleDropDownMenu = () => setShowSubSection((prev) => !prev);
-
-//   const handleSubsectionOpen = () => {
-//     dispatch(setSubSectionToggle(true));
-//   };
-
-//   const valid = () => {
-//     if (!formData.sectionName) {
-//       toast.error("Section name is required");
-//       return false;
-//     }
-//     return true;
-//   };
-
-//   const ClearForm = () => {
-//     setFormData({ ...formData, sectionName: "" });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!valid()) return;
-
-//     const toastId = toast.loading("Creating Section...");
-//     try {
-//       const response = await apiConnect("POST", SectionName.CREATE_SECTION_API, {
-//         ...formData,
-//         courseId: CourseId,
-//       });
-
-//       const newSection = response?.data?.Section;
-//       dispatch(setTotalSections([...TotalSections, newSection]));
-//       dispatch(setSectionId(newSection._id));
-//       dispatch(setSectionToggle(true));
-//       dispatch(setTotalSubSections({
-//         ...TotalSubSections,
-//         [newSection._id]: [],
-//       }));
-     
-
-
-//       toast.success(response?.data?.message, { id: toastId });
-//       ClearForm();
-//     } catch (err) {
-//       toast.error(err?.response?.data?.message || "Error", { id: toastId });
-//     }
-//   };
-
-//   const handleSectionDelete = async (id) => {
-//     const toastId = toast.loading("Deleting Section...");
-//     try {
-//       await apiConnect("DELETE", DeleteSection.DELETE_SECTION_API, { sectionId: id });
-//       dispatch(setTotalSections(TotalSections.filter((s) => s._id !== id)));
-//       const updatedSubSections = { ...TotalSubSections };
-//       delete updatedSubSections[id];
-//       dispatch(setTotalSubSections(updatedSubSections));
-//       toast.success("Section deleted", { id: toastId });
-//     } catch (err) {
-//       toast.error("Error deleting section", { id: toastId });
-//     }
-//   };
-
-//   const DeletesubSection = async (sectionId, subId) => {
-//     const toastId = toast.loading("Deleting Sub Section...");
-//     try {
-//       await apiConnect("DELETE", DeleteSubSection.DELETE_Sub_SECTION_API, {
-//         subsectionId: subId,
-//       });
-//       const updatedList = (TotalSubSections[sectionId] || []).filter(
-//         (s) => s._id !== subId
-//       );
-//       dispatch(setTotalSubSections({
-//         ...TotalSubSections,
-//         [sectionId]: updatedList,
-//       }));
-//       toast.success("Subsection deleted", { id: toastId });
-//     } catch (err) {
-//       toast.error("Error deleting subsection", { id: toastId });
-//     }
-//   };
-
-//   return (
-//     <div className="w-[45vw] h-auto flex-col text-white flex justify-center items-center mt-10 p-10 rounded-2xl border-[#2C333F] bg-[#161D29]">
-//       <form>
-//         <h1 className="text-3xl font-semibold">Course Builder</h1>
-//         <div className="flex justify-center mt-10 flex-col w-[40vw] gap-5">
-//           <div>
-//             <label htmlFor="sectionName" className="text-md font-[400]">
-//               Section Name
-//             </label>
-//             <input
-//               type="text"
-//               id="sectionName"
-//               name="sectionName"
-//               value={formData.sectionName}
-//               onChange={handleInputChange}
-//               placeholder="Add a section name"
-//               className="h-[60px] w-full bg-[#2C333F] mt-3 placeholder:font-[600] pl-3 rounded-xl"
-//             />
-//           </div>
-//         </div>
-
-//         <div
-//           onClick={handleSubmit}
-//           className="btn cursor-pointer w-[200px] h-[50px] mt-5 rounded-lg gap-3 font-bold text-[#FFD60A] border-[1px] border-[#FFD60A] flex justify-center items-center"
-//         >
-//           Create Section
-//           <IoIosAddCircle className="text-[#FFD60A] text-2xl" />
-//         </div>
-
-//         {TotalSections.map((section) => (
-//           SectionToggle && (
-//             <div key={section._id} className="bg-[#424854] h-auto p-5 mt-5 rounded-2xl">
-//               <div className="flex text-xl items-center justify-between">
-//                 <div className="flex items-center gap-3">
-//                   <RxDropdownMenu onClick={handleDropDownMenu} className="text-3xl cursor-pointer" />
-//                   <div className="text-lg font-bold">{section.sectionName}</div>
-//                 </div>
-//                 <RiDeleteBin5Fill
-//                   className="cursor-pointer"
-//                   onClick={() => handleSectionDelete(section._id)}
-//                 />
-//               </div>
-//               <hr className="my-3" />
-
-//               {(showSubsection && TotalSubSections[section._id]) &&
-//                 TotalSubSections[section._id].map((sub, subIndex) => (
-//                   <div key={sub._id} className="bg-[#2C333F] p-4 rounded-xl my-2">
-//                     <div className="flex justify-between items-center">
-//                       <p className="font-semibold">{sub.title}</p>
-//                       <RiDeleteBin5Fill
-//                         onClick={() => DeletesubSection(section._id, sub._id)}
-//                         className="cursor-pointer"
-//                       />
-//                     </div>
-//                   </div>
-//                 ))}
-
-//               <div
-//                 onClick={handleSubsectionOpen}
-//                 className="text-[#FFD60A] font-bold cursor-pointer flex gap-2 text-xl mt-5"
-//               >
-//                 <IoAddCircleSharp className="text-2xl" /> Add Lecture
-//               </div>
-//             </div>
-//           )
-//         ))}
-
-//         <div className="flex justify-end w-full mt-6">
-//           <YellowArrowBtn text="Next" />
-//         </div>
-//       </form>
-
-//       {subSectionToggle && <SubSection />}
-//     </div>
-//   );
-// };
-
-// export default CourseForm2;

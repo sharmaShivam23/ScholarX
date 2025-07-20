@@ -1,24 +1,3 @@
-// import React from 'react'
-
-// const Message = () => {
-//   return (
-//     <div className='h-auto  w-[25vw] p-6 bg-[#161D29] border-[2px] border-[#2C333F] rounded-lg mt-20'>
-//       <h1>⚡Course Upload Tips</h1>
-//         <ul className='text-lg '>
-          
-//           <li>Set the Course Price option or make it free.</li>
-//           <li>Standard size for the course thumbnail is 1024x576.</li>
-//           <li>Video section controls the course overview video.</li>
-//           <li>Course Builder is where you create & organize a course.</li>
-//           <li>Add Topics in the Course Builder section to create lessons, quizzes, and assignments.</li>
-//           <li>Make Announcements to notify any important</li>
-//           {/* <li></li> */}
-//         </ul>
-//     </div>
-//   )
-// }
-
-// export default Message
 
 import React from 'react';
 

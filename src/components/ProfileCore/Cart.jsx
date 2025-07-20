@@ -52,9 +52,9 @@ const Cart = () => {
     {/* Course Info */}
     <div className="flex-1 flex flex-col justify-between gap-3">
       <div className="space-y-1">
-        <h2 className="text-lg sm:text-xl font-semibold">{item.courseName}</h2>
+        <h2 className="text-lg sm:text-xl font-semibold">{item?.courseName || "HTML"}</h2>
         <p className="text-sm text-gray-400">
-          Instructor: {item.Instructor?.firstName} {item.Instructor?.lastName}
+          Instructor: {item?.Instructor?.firstName} {item?.Instructor?.lastName}
         </p>
 
         {/* Description aligned properly below */}

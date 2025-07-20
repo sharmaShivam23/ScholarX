@@ -11,7 +11,7 @@ exports.createCategory = async (req, res) => {
       });
     }
     const response = await category.create({ name, description });
-    console.log(response);
+    // console.log(response);
 
     res.status(200).json({
       success: true,
