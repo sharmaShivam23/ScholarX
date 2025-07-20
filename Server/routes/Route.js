@@ -32,10 +32,10 @@ const { resetPassword, resetPasswordToken , updatePassword } = require('../contr
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, 
-  max: 3,
+  max: 2,
   message: {
     success: false,
-    message: "Too many OTP attempts. Please try again after an hour."
+    message: "Too many  attempts. Please try again after 15 minutes."
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -47,7 +47,7 @@ const Signuplimiter = rateLimit({
   max: 3,
   message: {
     success: false,
-    message: "Too many Signup attempts. Please try again after an hour."
+    message: "Too many Signup attempts. Please try again after 15 minutes."
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -56,10 +56,10 @@ exports.Signuplimiter = Signuplimiter;
 
 const Tokenlimiter = rateLimit({
   windowMs: 15 * 60 * 1000, 
-  max: 3,
+  max: 2,
   message: {
     success: false,
-    message: "Too many  attempts. Please try again after an hour."
+    message: "Too many  attempts. Please try again after 15 minutes."
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -74,7 +74,7 @@ router.post('/signup', Signuplimiter ,  signUp);
 router.post('/login' ,  login);
 router.post('/change-password', changePassword);
 router.post('/Chatbot', Chatbot);
-router.post('/Contact', submitContactForm);
+router.post('/Contact', limiter ,  submitContactForm);
 
 // Category Routes*
 // router.post('/create-category', createCategory);
@@ -82,9 +82,6 @@ router.post('/create-category',auth, isAdmin, createCategory);
 router.get('/categories', showAllCategory);
 router.post('/category/course', getCourseDeatils);
 
-// Course Routes*
-// router.post('/create-course', createCourse);
-// router.post('/create-course', createCourse);
 router.post('/create-course', auth , isInstructor, createCourse);
 router.get('/courses', showAllCourses);
 router.get('/course/:courseId',CourseDetails);

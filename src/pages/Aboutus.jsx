@@ -12,6 +12,9 @@ import about1 from "../assets/AboutUsImages/about1.svg"
 import about2 from "../assets/AboutUsImages/about2.svg"
 import about3 from "../assets/AboutUsImages/about3.svg"
 import { RiDoubleQuotesL } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ReviewCard from "../components/cores/Homepage/ReviewCard";
 const Aboutus = () => {
   return (
     <div className="bg-[#000814]  text-white">
@@ -21,6 +24,7 @@ const Aboutus = () => {
       <ForthPage />
       <FifthPage />
       <Contact/>
+      <ReviewCard/>
     </div>
   );
 };
@@ -70,9 +74,10 @@ const FirstPage = () => {
         <div className="img flex justify-center gap-20 items-center flex-wrap ">
           {images.map((item, index) => (
             <img
+            key={index}
               src={item.img}
               className="h-[350px] w-[350px] object-cover"
-              alt=""
+              alt="img"
             />
           ))}
         </div>
@@ -181,6 +186,19 @@ const ForthPage = () => {
 
 
 const FifthPage = () => {
+   const navigate = useNavigate()
+ const { token } = useSelector((state) => state.auth);
+
+ 
+ const handleLog = () => {
+  if(token){
+    navigate("/dashboard/my-profile")
+  }
+  else{
+  navigate("/login")
+  }
+ }
+ 
   return (
     <div className="h-auto w-full flex justify-center items-center py-10 px-4 sm:px-10">
       <div className="grid gap-6 w-full max-w-[1300px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -196,7 +214,7 @@ const FifthPage = () => {
             companies to bring flexible, affordable, job-relevant online learning to
             individuals and organizations worldwide.
           </p>
-          <div className="mt-4">
+          <div onClick={handleLog} className="mt-4">
             <YellowArrowBtn text="Learn More" />
           </div>
         </div>

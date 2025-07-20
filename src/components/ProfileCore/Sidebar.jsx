@@ -74,7 +74,12 @@ const Sidebar = () => {
         <div className={`w-[70vw]  mt-10 border-2  border-[#424854] z-50 fixed top-0 left-0 h-screen bg-[#161D29] pt-16 p-4 md:hidden flex flex-col gap- text-center`}>
           {Sidebardata.map((item, index) => {
             if (item.type && user?.accountType !== item.type) return null;
-            return renderSidebarItem(item, index);
+            // return renderSidebarItem(item, index);
+             return (
+        <React.Fragment key={item.id || item.title || index}>
+          {renderSidebarItem(item, index)}
+        </React.Fragment>
+      );
           })}
         </div>
       )}

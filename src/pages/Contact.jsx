@@ -2,6 +2,7 @@ import React from "react"
 
 import ContactDetails from "../components/ContactPage/ContactDetails"
 import ContactForm from "../components/ContactPage/ContactForm"
+import ReviewCard from "../components/cores/Homepage/ReviewCard";
 
 
 const Contact = () => {
@@ -18,6 +19,7 @@ const Contact = () => {
           <ContactForm />
         </div>
       </div>
+      <ReviewCard/>
     </div>
   )
 }

@@ -3,6 +3,8 @@ import HighlightText from "./HighlightText";
 import YellowArrowBtn from "./YellowArrowBtn";
 import Shadowbtn from "./Shadowbtn";
 import { TypeAnimation } from "react-type-animation";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const CodeBlocks = ({
   text,
   highlighttext,
@@ -11,6 +13,17 @@ const CodeBlocks = ({
   btntext,
   active,
 }) => {
+
+   const navigate = useNavigate()
+ const { token } = useSelector((state) => state.auth);
+ const handleClick = () => {
+  if(token){
+    navigate("/dashboard/my-profile")
+  }
+  else{
+  navigate("/signup")
+  }
+ }
   return (
     <div
       className={`flex justify-center items-center ${
@@ -24,7 +37,7 @@ const CodeBlocks = ({
         <p className="content text-xl font-[500] text-[#999DAA] mt-7 pr-4">
           {bigtext}
         </p>
-        <div className="btn mt-12 flex gap-8 ">
+        <div onClick={handleClick} className="btn mt-12 flex gap-8 ">
           <YellowArrowBtn text={btntext} />
           <Shadowbtn text="Learn more" />
         </div>

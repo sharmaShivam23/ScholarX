@@ -6,21 +6,24 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const mailSender = require("../utils/mailSender");
 const Profile = require("../model/Profile");
+const fs = require('fs');
+const path = require('path');
 
-//send otp
+
+
 exports.sendOTP = async (req, res) => {
   try {
     const { email } = req.body;
 
     if (typeof email !== "string") {
-      return res.status(400).json({ message: "Invalid email  type" });
+      return res.status(400).json({ message: "Invalid email type" });
     }
 
     const existUser = await user.findOne({ email });
     if (existUser) {
       return res.status(401).json({
         success: false,
-        message: "user already exits",
+        message: "User already exists",
       });
     }
 
@@ -29,36 +32,37 @@ exports.sendOTP = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    //  console.log(otp);
 
-    let result = await OTP.findOne({ otp: otp });
-    //ifthe genearted otp is already present in db genearte other unique otp
+    let result = await OTP.findOne({ otp });
     while (result) {
       otp = otpGenerator.generate(5, {
         upperCaseAlphabets: false,
         lowerCaseAlphabets: false,
         specialChars: false,
       });
-      result = await OTP.findOne({ otp: otp });
+      result = await OTP.findOne({ otp });
     }
 
-    const otpPayload = { email, otp };
-    const otpresult = await OTP.create(otpPayload);
-    //  console.log(otpresult);
 
-    res.status(200).json({
+    const otpPayload = { email, otp };
+    await OTP.create(otpPayload);
+
+
+    return res.status(200).json({
       success: true,
-      message: "otp send successfully",
-      // otp
+      message: "OTP sent successfully",
     });
+
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: true,
-      message: err.message,
+    console.error("Send OTP Error:", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Internal Server Error",
     });
   }
 };
+
+
 
 //signup
 exports.signUp = async (req, res) => {

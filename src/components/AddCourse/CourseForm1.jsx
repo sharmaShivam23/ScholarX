@@ -307,7 +307,7 @@ const CourseForm1 = () => {
             <div className="w-full min-h-[200px] h-auto bg-[#2C333F] border border-dashed border-white flex items-center justify-center rounded-xl cursor-pointer">
               {formData.thumbnail ? (
                 <img
-                  src={URL.createObjectURL(formData.thumbnail)}
+                  src={URL.createObjectURL(formData?.thumbnail)}
                   alt={formData.thumbnail.name}
                   className="w-full h-full object-cover rounded-xl"
                 />

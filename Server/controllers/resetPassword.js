@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const mailSender = require("../utils/mailSender");
 const crypto = require("crypto")
 const mongoose = require('mongoose')
+const fs = require('fs');
+const path = require('path');
 
 // Generate and send password reset token
 exports.resetPasswordToken = async (req, res) => {
@@ -48,12 +50,21 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true }
     );
 
-    const url = `https://scholar-x.vercel.app/updatepassword/${token}`
-    // const url = `http://localhost:5174/updatepassword/${token}`
-     // ✅ Fixed URL (was https:localhost)
-
-    // Send email
-    await mailSender(email, "Password Reset Link", `Click to reset your password: ${url}`);
+    const resetLink = `https://scholar-x.vercel.app/updatepassword/${token}`
+   
+    // await mailSender(email, "Password Reset Link", `Click to reset your password: ${url}`);
+      const templatePath = path.join(__dirname, '../Templates/Forgotpassword_template.html');
+            if (!fs.existsSync(templatePath)) {
+              return res.status(500).json({
+                success: false,
+                message: "Forgot password  template not found.",
+              });
+            }
+        
+            const forgotpasswordTemplate = fs.readFileSync(templatePath, 'utf8');
+            const htmlContent = forgotpasswordTemplate.replace(/{{\s*resetLink\s*}}/g, resetLink);
+        
+            await mailSender(email, "Your ScholarX Password Reset", htmlContent);
 
     return res.status(200).json({
       success: true,

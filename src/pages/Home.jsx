@@ -15,15 +15,40 @@ import Floatcards from "../components/cores/Homepage/Floatcards";
 import Women from "../assets/images/Women.png";
 import ReviewCard from "../components/cores/Homepage/ReviewCard";
 import ExploreMore from "../components/cores/Homepage/ExploreMore";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const Home = () => {
+ const navigate = useNavigate()
+ const { token } = useSelector((state) => state.auth);
+ 
+
+ const handleClick = () => {
+  if(token){
+    navigate("/dashboard/my-profile")
+  }
+  else{
+  navigate("/signup")
+  }
+ }
+
+ const handleLog = () => {
+  if(token){
+    navigate("/dashboard/my-profile")
+  }
+  else{
+  navigate("/login")
+  }
+ }
+
+
   return (
     <div className="bg-[#000814] mt-20  text-white flex  justify-center items-center flex-col   text-center overflow-x-hidden">
       {/* section1 */}
       <div className="sec1 flex justify-center items-center mt-4 p-7  sm:p-16 flex-col">
-        <div className="btn shadow-[0px_1px_2px_rgba(255,255,255,0.6)]  flex border- bg-[#161D29]  sm:p- sm:px-8 px-5 py-3 rounded-4xl text-[#999DAA]">
-          <p className="txt text-[#999DAA] font-[500] flex items-center text-xs sm:text-lg">
+        <div className="btn cursor-pointer shadow-[0px_1px_2px_rgba(255,255,255,0.6)]  flex border- bg-[#161D29]  sm:p- sm:px-8 px-5 py-3 rounded-4xl text-[#999DAA]">
+          <p onClick={handleClick} className="txt  text-[#999DAA] font-[500] flex items-center text-xs sm:text-lg">
             Become an Instructor
           </p>
           <div className="icon flex justify-center items-center ml-2 sm:mt-1.5 mt-1 text-[#999DAA] font-bold">
@@ -45,8 +70,12 @@ const Home = () => {
         </p>
 
         <div className="buttons flex justify-center  flex-row items-center gap-[30px] mt-10 font-bold">
-          <YellowBtn text="Learn More" px="px-5" />
-          <Shadowbtn text="Book a demo" />
+          <div onClick = {handleClick}>
+             <YellowBtn  text="Learn More" px="px-5" />
+          </div>
+          <div onClick = {handleLog}>
+          <Shadowbtn  text="Book a demo" />
+          </div>
         </div>
       </div>
 
@@ -93,7 +122,7 @@ const Home = () => {
 
         <div className="img relative  z-10">
           <img src={homebg2} className=" h-[50vh] bg-red-400 z-10" alt="" />
-          <div className="flex justify-center w-[100%] items-center gap-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div onClick={handleClick} className="flex justify-center w-[100%] items-center gap-10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <YellowArrowBtn text="Explore full catalog" />
             <Shadowbtn text="Learn More" />
           </div>
@@ -114,7 +143,7 @@ const Home = () => {
             The modern StudyNotion is the dictates its own terms. Today, to be a
             competitive specialist requires more than professional skills
           </p>
-          <div className="relative top-6 sm:top-10">
+          <div onClick={handleClick} className="relative top-6 sm:top-10">
             <YellowBtn text="Learn More" />
           </div>
         </div>
@@ -200,7 +229,7 @@ const Home = () => {
         </div>
 
         <Floatcards />
-        <div className="btn mt-24 flex justify-center items-center">
+        <div onClick={handleClick} className="btn mt-24 flex justify-center items-center">
           <YellowArrowBtn text="Learn More" />
         </div>
       </div>
@@ -224,7 +253,7 @@ const Home = () => {
               love.
             </p>
           </div>
-          <div className="btn mt-10 flex justify-start w-[100%]  left-32 bottom-56">
+          <div onClick={handleClick} className="btn mt-10 flex justify-start w-[100%]  left-32 bottom-56">
             <YellowArrowBtn text="Start Teaching Today" />
           </div>
         </div>

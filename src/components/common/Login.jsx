@@ -13,9 +13,12 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "../../slices/ProfileSlice";
 import { setLoading } from "../../slices/authSlice";
 import toast from "react-hot-toast";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   // const [selectedRole, setSelectedRole] = useState("Student");
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
@@ -33,37 +36,36 @@ const Login = () => {
     // setFormData((prev) => ({...prev , [name] : value , selectedRole}))
   };
 
-
   const handleForm = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // console.log("Form Data:", formData);
-  dispatch(setLoading(true));
-  const toastId = toast.loading("Logging in...");
+    // console.log("Form Data:", formData);
+    dispatch(setLoading(true));
+    const toastId = toast.loading("Logging in...");
 
-  try {
-    const result = await apiConnect("POST", login.LOGIN_API, formData);
+    try {
+      const result = await apiConnect("POST", login.LOGIN_API, formData);
 
-    if (result?.data?.success) {
-      toast.success(result?.data?.message , { id: toastId });
+      if (result?.data?.success) {
+        toast.success(result?.data?.message, { id: toastId });
 
-      localStorage.setItem("token", JSON.stringify(result.data.token));
-      dispatch(setToken(result.data.token));
-      dispatch(setProfileImage(result.data.user?.image || ""));
-      dispatch(setUser(result.data.user));
-      navigate("/dashboard/my-profile");
-    } else {
-      toast.error(result.data?.message || "Login failed!", { id: toastId });
+        localStorage.setItem("token", JSON.stringify(result.data.token));
+        dispatch(setToken(result.data.token));
+        dispatch(setProfileImage(result.data.user?.image || ""));
+        dispatch(setUser(result.data.user));
+        navigate("/dashboard/my-profile");
+      } else {
+        toast.error(result.data?.message || "Login failed!", { id: toastId });
+      }
+    } catch (err) {
+      // console.error("Login error:", err);
+      toast.error(err?.response?.data?.message || "Something went wrong", {
+        id: toastId,
+      });
+    } finally {
+      dispatch(setLoading(false));
     }
-
-  } catch (err) {
-    // console.error("Login error:", err);
-    toast.error(err?.response?.data?.message || "Something went wrong", { id: toastId });
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
-
+  };
 
   return (
     <div className="signup bg-[#000814] px-6 gap-6  sm:px-32 flex h-auto sm:h-[100vh] text-white py-10 sm:flex-row flex-col w-[100vw]">
@@ -78,7 +80,6 @@ const Login = () => {
             text="Education to future-proof your career."
           />
         </div>
-
 
         <form onSubmit={handleForm}>
           <div className="email mt-12">
@@ -98,22 +99,29 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="1 flex justify-center   items-center gap-5 mt-5.5">
-            <div className="flex justify-center flex-col w-full">
-              <label htmlFor="pass" className="text-lg mb-1.5 font-[600]">
+          <div className="flex justify-center items-center gap-5 mt-5.5">
+            <div className="relative w-full">
+              <label htmlFor="pass" className="text-lg mb-1.5 font-[600] block">
                 Password
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="pass"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter Password"
-                className=" h-[60px] bg-[#161D29] placeholder:font-[600] pl-3 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
+                className="h-[60px] w-full bg-[#161D29] placeholder:font-[600] pl-3 pr-12 rounded-xl shadow-[0px_1px_2px_rgba(255,255,255,0.6)]"
               />
+              <div
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute top-[68%] right-4 text-xl translate-y-[-50%] cursor-pointer text-white"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
             </div>
           </div>
+
           <Link to="/forgotpassword">
             <p className="text-[#47A5C5] text-end font-semibold text-md mt-1">
               Forgot password

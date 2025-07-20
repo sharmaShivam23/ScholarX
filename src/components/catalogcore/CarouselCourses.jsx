@@ -55,7 +55,7 @@ const CarouselCourses = ({ id, courses }) => {
             className="w-full max-w-sm border-2 mt-10 cursor-pointer border-white  shadow-lg hover:shadow-xl transition-shadow duration-300 mx-auto p-6 flex flex-col items-start text-left space-y-4"
           >
             <img
-              src={item.thumbnail}
+              src={item?.thumbnail}
               alt="Course thumbnail"
               className="w-full h-48 object-cover rounded-xl"
             />

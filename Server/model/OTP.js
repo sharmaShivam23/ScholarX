@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const mailSender = require('../utils/mailSender')
+const fs = require('fs');
+const path = require('path');
 
 const otpSchema = new mongoose.Schema({
  
@@ -22,8 +24,20 @@ const otpSchema = new mongoose.Schema({
 
 const sendVerificationMail = async(email,otp) => {
   try{
-   const mailResponse = await mailSender(email , "verify email from schloarX" , otp)
-  //  console.log(mailResponse);
+
+     const templatePath = path.join(__dirname, '../Templates/Otp_Template.html');
+        if (!fs.existsSync(templatePath)) {
+          return res.status(500).json({
+            success: false,
+            message: "OTP template not found.",
+          });
+        }
+    
+        const otpTemplate = fs.readFileSync(templatePath, 'utf8');
+        const htmlContent = otpTemplate.replace(/{{\s*otp\s*}}/g, otp);
+    
+        await mailSender(email, "Your ScholarX OTP", htmlContent);
+
    
   }catch(err){
     console.log(`error occured to send mail`);

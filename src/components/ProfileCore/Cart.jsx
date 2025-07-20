@@ -36,13 +36,13 @@ const Cart = () => {
     {/* Thumbnail */}
     <div className="i">
     <img
-      src={item.thumbnail}
-      alt={item.courseName}
+      src={item?.thumbnail}
+      alt={item?.courseName}
       className="h-40 sm:h-28 w-full sm:w-36 rounded-md object-cover"
     />
 
     <div className="date flex justify-center  text-sm items-center mt-6">
-      Created At :-  {new Date(item.createdAt).toLocaleDateString()}
+      Created At :-  {new Date(item?.createdAt).toLocaleDateString()}
     </div>
 
     </div>
